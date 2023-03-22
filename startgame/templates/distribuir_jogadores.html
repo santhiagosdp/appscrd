@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Equipes</h1>
+    <h2>Time 1:</h2>
+    <ul>
+    {% for jogador in time1 %}
+        <li>{{ jogador.nome }} - {{ jogador.posicao }}</li>
+    {% endfor %}
+    </ul>
+    <h2>Time 2:</h2>
+    <ul>
+    {% for jogador in time2 %}
+        <li>{{ jogador.nome }} - {{ jogador.posicao }}</li>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'listar_jogadores' %}">Ver lista de jogadores</a>
+{% endblock %}

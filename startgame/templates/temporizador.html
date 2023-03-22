@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="row" style="padding: 100px;">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 text-center">
+      <h2>
+        Time remaining: <span id="timer" >{{pelada.tempo_pelada}}</pelada></span>
+	  </h2>
+	  <button class="btn btn-success" id="reset">Reset Timer</button>
+    </div>
+  </div>
+
+  <script>
+	var timerInterval;
+	
+
+	function startTimer(duration, display) {
+		var timer = duration, minutes, seconds;
+		timerInterval = setInterval(function () {
+			minutes = parseInt(timer / 60, 10);
+			seconds = parseInt(timer % 60, 10);
+
+			minutes = minutes < 10 ? "0" + minutes : minutes;
+			seconds = seconds < 10 ? "0" + seconds : seconds;
+
+			display.textContent = minutes + ":" + seconds;
+
+			if (--timer < 0) {
+				clearInterval(timerInterval);
+				display.textContent = "Time's up!";
+			}
+		}, 1000);
+	}
+
+	function resetTimer(duration, display) {
+		clearInterval(timerInterval);
+		display.textContent = duration / 60 + ":00";
+		startTimer(duration, display);
+	}
+
+	window.onload = function () {
+		var duration = {{tempo}}
+			display = document.querySelector('#timer');
+		startTimer(duration, display);
+
+		var resetButton = document.querySelector('#reset');
+		resetButton.onclick = function() {
+			resetTimer(duration, display);
+		}
+	};
+  </script>
+{% endblock %}

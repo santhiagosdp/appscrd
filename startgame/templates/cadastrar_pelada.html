@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <h1>Cadastrar Pelada</h1>
+      <form method="POST" class="form-control text-center">
+        {% csrf_token %}
+        <!-- {{ form.as_p }} -->
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-4">
+            <label for="tempo_pelada">tempo_pelada:</label>
+            <input class="form-control" type="number" max="60" min="1" id="tempo_pelada" name="tempo_pelada" step="1" />
+          </div>
+          <div class="col-sm-4">
+            <label for="quantidade_jogadores">Quantidade jogadores:</label>
+            <input class="form-control" type="number" max="20" min="1" id="quantidade_jogadores" name="quantidade_jogadores" step="1"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-4">
+            <label for="valor_jogador">Valor por jogador:</label>
+            <input class="form-control" type="number" max="60" min="1" id="valor_jogador" name="valor_jogador" />
+          </div>
+          <div class="col-sm-4">
+            <label for="local">Local do Jogo:</label>
+            <input class="form-control" type="text" maxlength="50" id="local" name="local" />
+          </div>
+        </div>
+        <p></p>
+        <button class="btn btn-outline-success" type="submit">Cadastrar</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+ .tituloTime{
+  height: 30px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+</style>
+
+  <h1 style="padding: 20px;" class="text-center">Cadastrar Time - ({{ quant }} jogadores)</h1>
+
+  <form method="POST">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4" style="box-shadow:0 0 5px 0px grey;">
+      </br>
+        {{ form.as_p }}
+        <h6 style="color: red;" ><strong>Jogadores:</strong></h6>
+        
+        <a type="button" href="#"  style=" text-decoration: none;display: flex; align-items: center;">
+          <span class="spinner-border text-primary" role="status"></span>
+          Selecionar Aleatório
+        <a>    <!-- Colocar JS pra selecionar automaticamente-->
+      <div class="row" style="box-shadow:0 0 5px 0px grey;">
+        <label style="color:red">Ou marque:</label>        
+          {% for jogador in jogadores %}
+          <div class="col-md-6"> <!-- pra ficar em 2 colunas-->
+            <input type="checkbox" id="{{ jogador.id }}" name="jogador[]" value="{{ jogador.id }}" />
+            <label for="{{ jogador.id }}">{{ jogador.nome }}</label>
+          </div>
+        {% endfor %}
+      </div>
+      </br>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <button style="width: 50%; height: 50px;" class="btn btn-outline-success" type="submit">Cadastrar</button>
+        </div>
+      </div>
+    </br>
+    </div>
+  </form>
+<p></p>
+
+<div class="text-center">
+  <h3> Times Criados</h3>
+</div>
+{% for time in times  %}
+<p></p>
+<div class="row text-center">
+  <div class="col-md-4 text-center"> 
+  </div>
+  <div class="col-md-4 text-center">
+    <h6 class="tituloTime" style="background-color: {{time.cor_time}};"><strong> {{time.nome_time}} </strong></h6>  
+    {% for item in time_jogador  %}
+    <div>
+      {% if item.time.nome_time == time.nome_time %}        
+        <label class=" text-center"> {{item.jogador.nome}} </label></br>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>  
+{% endfor %}
+
+    
+{% endblock %}

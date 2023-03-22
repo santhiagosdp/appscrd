@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Próximos jogadores</h1>
+    <ul>
+    {% for jogador in jogadores %}
+        <li>{{ jogador.nome }} - {{ jogador.posicao }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
