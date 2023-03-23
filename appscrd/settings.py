@@ -31,6 +31,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'institucional',
     'startgame',
+    'pousadaeasy',
+    'calculadoraseasy',
+    'estoqueeasy',
+    'notaseasy',
 ]
 
 MIDDLEWARE = [
