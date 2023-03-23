@@ -3,18 +3,24 @@
 {% block content %}
 
 <div class="row" style="padding: 50px;">
+    <div class="col-md-3"></div>
     <div class="col-md-6">
-    <h1>Cadastrar jogador</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Cadastrar</button>
-    </form>
-    </div>
-    <div class="col-md-6">
+        <h1>Cadastrar jogador</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <!-- {{ form.as_p }} -->
+            <label for="nome">Nome</label>
+            <input class="form-control" type="text" id="nome" name="nome" required>
+            <label for="posicao">Posição</label>
+            <input class="form-control" type="text" id="posicao" name="posicao" required>
+            <p></p>
+
+            <button class="btn btn-success" type="submit">Cadastrar</button>
+        </form>
+<p></p>
         <form method="get" >
             <input type="hidden" name="deletar_todos" value="True">
-            <button class="btn btn-success" type="submit">Deletar todos jogadores</button>
+            <button class="btn btn-danger" type="submit">Deletar todos jogadores</button>
         </form>
         <ul>
             {% for jogador in jogadores %}
@@ -23,5 +29,6 @@
             {% endfor %}
           </ul>
     </div>
+</div>
 
     {% endblock %}

@@ -1,8 +1,9 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
 
 class Jogador(models.Model):
-    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     habil = models.BooleanField(default=True)
     nome = models.CharField(max_length=100)
     posicao = models.CharField(max_length=50)
@@ -10,7 +11,7 @@ class Jogador(models.Model):
     is_selecionado = models.BooleanField(default=False)
 
 class Pelada(models.Model):
-    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     habil = models.BooleanField(default=True)
     tempo_pelada = models.IntegerField(default=5)
     quantidade_jogadores = models.IntegerField(default=7)
@@ -18,7 +19,7 @@ class Pelada(models.Model):
     local = models.CharField(default='Society', max_length=50)
 
 class Time(models.Model):
-    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     habil = models.BooleanField(default=True)
     nome_time = models.CharField(max_length=50)
     cores_choices = (
@@ -32,14 +33,14 @@ class Time(models.Model):
     cor_time = models.CharField(max_length=6, choices=cores_choices, blank=False, null=False)
 
 class Time_jogador(models.Model):
-    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     habil = models.BooleanField(default=True)
     jogador = models.ForeignKey(Jogador, on_delete=models.CASCADE)
     time = models.ForeignKey(Time, on_delete=models.CASCADE)
 
 
 class Time_pelada(models.Model):
-    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     habil = models.BooleanField(default=True)
     time = models.ForeignKey(Time, on_delete=models.CASCADE)
     pelada = models.ForeignKey(Pelada, on_delete=models.CASCADE)

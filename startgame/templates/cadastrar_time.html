@@ -9,6 +9,10 @@
   align-items: center;
   justify-content: center;
  }
+ h6{
+  font-size: 20px;
+  text-align: center;
+ }
 </style>
 
   <h1 style="padding: 20px;" class="text-center">Cadastrar Time - ({{ quant }} jogadores)</h1>
@@ -19,10 +23,24 @@
       <div class="col-md-4"></div>
       <div class="col-md-4" style="box-shadow:0 0 5px 0px grey;">
       </br>
-        {{ form.as_p }}
+       <label for="nome_time">Nome</label>
+       <input class="form-control" type="text" id="nome_time" name="nome_time" required>
+       <label for="cor_time">Cor do Time</label>
+       <select class="form-control" name="cor_time">
+        <option selected>-</option>
+        <option value="green" style="color:green">Verde</option>
+        <option value="yellow" style="color:yellow">Amarelo</option>
+        <option value="blue" style="color:blue">Azul</option>
+        <option value="black" style="color:black">Preto</option>
+        <option value="orange" style="color:orange" >Laranja 3</option>
+        <option value="red" style="color: red;">Vermelho</option>
+
+      </select>
+
+       <p></p>
         <h6 style="color: red;" ><strong>Jogadores:</strong></h6>
         
-        <a type="button" href="#"  style=" text-decoration: none;display: flex; align-items: center;">
+        <a type="button" href="#"  style="text-decoration: none;display: flex; align-items: center;">
           <span class="spinner-border text-primary" role="status"></span>
           Selecionar Aleatório
         <a>    <!-- Colocar JS pra selecionar automaticamente-->

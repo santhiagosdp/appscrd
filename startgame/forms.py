@@ -4,7 +4,7 @@ from .models import Jogador, Time, Time_jogador, Pelada, Time_pelada
 class JogadorForm(forms.ModelForm):
     class Meta:
         model = Jogador
-        fields = ['nome', 'posicao']
+        fields = ['nome', 'posicao', 'usuario']
 
 
 class TimeForm(forms.ModelForm):

@@ -8,6 +8,12 @@ urlpatterns = [
     path('cadastrar_pelada/', views.cadastrar_pelada, name='cadastrar_pelada'),
     path('temporizador/', views.temporizador, name='temporizador'),
 
+    
+    path('accounts/login/', views.login_view, name='login'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('new_user', views.new_user, name='new_user'),
+
 
     path('listar_jogadores/', views.listar_jogadores, name='listar_jogadores'),
 ]
