@@ -21,7 +21,7 @@ class Time_jogadorForm(forms.ModelForm):
 class PeladaForm(forms.ModelForm):
     class Meta:
         model = Pelada
-        fields = ['tempo_pelada', 'quantidade_jogadores', 'valor_jogador','local']
+        fields = ['tempo_pelada', 'quantidade_jogadores'] #'valor_jogador','local'
 
 
 class Time_peladaForm(forms.ModelForm):

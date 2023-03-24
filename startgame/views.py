@@ -45,10 +45,14 @@ def cadastrar_jogador(request):
 
     if request.method == 'POST':
         nome = request.POST.get('nome')
-        posicao = request.POST.get('posicao')
+        listaj = Jogador.objects.filter(usuario = request.user, habil = True).order_by('posicao')
+        posicao = 1
+        for jog in listaj:
+            posicao = jog.posicao+1
+
         jogador = Jogador.objects.create(
             usuario=request.user,
-            nome = nome,
+            nome = nome.upper(),
             posicao = posicao,
         )
         return redirect('cadastrar_jogador')
@@ -86,14 +90,14 @@ def cadastrar_pelada(request):
         deletarpelada(request)
         tempo_pelada = request.POST.get('tempo_pelada')
         quantidade_jogadores = request.POST.get('quantidade_jogadores')
-        valor_jogador = request.POST.get('valor_jogador')
-        local = request.POST.get('local')
+        #valor_jogador = request.POST.get('valor_jogador')
+        #local = request.POST.get('local')
         pelada = Pelada.objects.create(
             usuario = request.user,
             tempo_pelada=tempo_pelada,
             quantidade_jogadores=quantidade_jogadores,
-            valor_jogador=valor_jogador,
-            local=local
+            #valor_jogador=valor_jogador,
+            #local=local.upper()
             )
         pelada.save()
         return redirect('cadastrar_time')
@@ -108,25 +112,6 @@ def cadastrar_pelada(request):
 @login_required
 def cadastrar_time(request): #cadastro do time
     jogadores = Jogador.objects.filter(habil=True, usuario = request.user)
-    ## se for cadastrar time
-    if request.method == 'POST':
-        nome_time = request.POST.get('nome_time')
-        cor_time = request.POST.get('cor_time')
-        jogadores_selecionados = request.POST.getlist('jogador[]')
-        time = Time.objects.create(
-            usuario = request.user,
-            nome_time = nome_time,
-            cor_time=cor_time)
-        time.save()
-        for codigo in jogadores_selecionados:
-            jogador_selecionado = Jogador.objects.get(id=codigo, usuario = request.user)
-            time_jogador = Time_jogador.objects.create(
-                usuario = request.user,
-                jogador = jogador_selecionado,
-                time=time)
-            time_jogador.save()
-
-        return redirect('cadastrar_time')
      
     time_jogador = Time_jogador.objects.filter(habil = True, usuario = request.user).order_by('time')
     times = Time.objects.filter(habil = True, usuario = request.user).order_by('nome_time')
@@ -146,14 +131,28 @@ def cadastrar_time(request): #cadastro do time
     for p in peladas:
         pelada = p
 
-    if pelada != 0:        
+    if pelada != 0:
+        ##montar times do zero
+        n = pelada.quantidade_jogadores
+        players = Jogador.objects.filter(usuario=request.user, habil=True).order_by('posicao')
+
+        # seleciona os jogadores para o time azul
+        time_azul = players.values_list('id', flat=True)[:n]
+        azul = list(Jogador.objects.filter(id__in=time_azul))
+
+        # seleciona os jogadores para o time vermelho
+        time_vermelho = players.exclude(id__in=Jogador.objects.filter(id__in=time_azul)).values_list('id', flat=True)[:n]
+        vermelho = list(Jogador.objects.filter(id__in=time_vermelho))
+        
         context = {     
             'titulo' : "Time",
+            'time_vermelho' : vermelho,
+            'time_azul' : azul,
             'usuario' : request.user, 
             'times' : times,
             'time_jogador': time_jogador,  
             'jogadores': jogadores_disponiveis,
-            'quant': pelada.quantidade_jogadores,  #qjuantidade de jogadores por time
+            'pelada': pelada,  #quantidade de jogadores por time
         }
         return render(request, 'cadastrar_time.html', context)
     else:
@@ -177,8 +176,6 @@ def temporizador(request):
         return render(request, 'temporizador.html', context)
     else:
         return redirect('cadastrar_pelada')
-
-
 
 def login_view(request):
     if request.method == 'POST':

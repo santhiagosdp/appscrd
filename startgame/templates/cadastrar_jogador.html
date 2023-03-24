@@ -1,34 +1,62 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <style>
+    label {
+      font-size: 200%;
+    }
+    .meuinput {
+      height: 70px;
+      font-size: 180%;
+    }
 
-<div class="row" style="padding: 50px;">
-    <div class="col-md-3"></div>
-    <div class="col-md-6">
-        <h1>Cadastrar jogador</h1>
+  </style>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-6 text-center" style="box-shadow:0 0 5px 0px grey;">
+        <h1>CADASTRAR JOGADOR</h1>
         <form method="POST">
-            {% csrf_token %}
-            <!-- {{ form.as_p }} -->
-            <label for="nome">Nome</label>
-            <input class="form-control" type="text" id="nome" name="nome" required>
-            <label for="posicao">Posição</label>
-            <input class="form-control" type="text" id="posicao" name="posicao" required>
-            <p></p>
+          {% csrf_token %}
+          <!-- {{ form.as_p }} -->
+          <label class="labelfor" for="nome">Nome</label>
+          <input class="form-control meuinput" type="text" id="nome" name="nome" required />
+          <p></p>
+          <button class="btn btn-success" type="submit" style="width: 60%; height: 70px; font-size: 2.5em;">CADASTRAR</button>
+        </form>
+        <p></p>
+      </div>
 
-            <button class="btn btn-success" type="submit">Cadastrar</button>
+      <div class="col-sm-12 col-md-12 col-lg-6">
+        <p></p>
+        <form method="get">
+          <input type="hidden" name="deletar_todos" value="True" />
+          <button class="btn btn-danger" type="submit" style="width: 50%; height: 50px; font-size: 1.5em;">Deletar todos</button>
+          <p></p>
         </form>
-<p></p>
-        <form method="get" >
-            <input type="hidden" name="deletar_todos" value="True">
-            <button class="btn btn-danger" type="submit">Deletar todos jogadores</button>
-        </form>
-        <ul>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col" class="text-center">POSIÇAO</th>
+              <th scope="col">NOME</th>
+              <th scope="col">#</th>
+            </tr>
+          </thead>
+          <tbody>
             {% for jogador in jogadores %}
-        </br>
-              <label>{{ jogador.id }} - {{ jogador.nome }} <a style="text-decoration: none; color: red;" href="?deletar_unico={{jogador.id}}"> X </a> </label> 
-            {% endfor %}
-          </ul>
+              <tr>
+                <th scope="row" class="text-center">{{ jogador.posicao }}</th>
+                <td>{{ jogador.nome }}</td>
+                <td>
+                  <a style="text-decoration: none; color: red;" href="?deletar_unico={{ jogador.id }}">X</a>
+                </td>
+                {% endfor %}
+              </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-</div>
+  </div>
 
-    {% endblock %}
+{% endblock %}

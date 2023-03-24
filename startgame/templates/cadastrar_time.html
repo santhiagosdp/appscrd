@@ -13,77 +13,110 @@
   font-size: 20px;
   text-align: center;
  }
+ p{
+  font-size: 20px;
+  font-weight: bold;
+ }
 </style>
 
-  <h1 style="padding: 20px;" class="text-center">Cadastrar Time - ({{ quant }} jogadores)</h1>
+<div class="container ">
 
-  <form method="POST">
-    {% csrf_token %}
-    <div class="row">
-      <div class="col-md-4"></div>
-      <div class="col-md-4" style="box-shadow:0 0 5px 0px grey;">
-      </br>
-       <label for="nome_time">Nome</label>
-       <input class="form-control" type="text" id="nome_time" name="nome_time" required>
-       <label for="cor_time">Cor do Time</label>
-       <select class="form-control" name="cor_time">
-        <option selected>-</option>
-        <option value="green" style="color:green">Verde</option>
-        <option value="yellow" style="color:yellow">Amarelo</option>
-        <option value="blue" style="color:blue">Azul</option>
-        <option value="black" style="color:black">Preto</option>
-        <option value="orange" style="color:orange" >Laranja 3</option>
-        <option value="red" style="color: red;">Vermelho</option>
+  <h1 class="text-center" style=" font-weight: bold">JOGANDO COM {{pelada.quantidade_jogadores}} JOGADORES POR TIME</h1>
 
-      </select>
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6" style="box-shadow:0 0 5px 0px grey; background-color: blue;color: white;">
+      <h3 class="text-center"> TIME AZUL</h3>
 
-       <p></p>
-        <h6 style="color: red;" ><strong>Jogadores:</strong></h6>
-        
-        <a type="button" href="#"  style="text-decoration: none;display: flex; align-items: center;">
-          <span class="spinner-border text-primary" role="status"></span>
-          Selecionar Aleatório
-        <a>    <!-- Colocar JS pra selecionar automaticamente-->
-      <div class="row" style="box-shadow:0 0 5px 0px grey;">
-        <label style="color:red">Ou marque:</label>        
-          {% for jogador in jogadores %}
-          <div class="col-md-6"> <!-- pra ficar em 2 colunas-->
-            <input type="checkbox" id="{{ jogador.id }}" name="jogador[]" value="{{ jogador.id }}" />
-            <label for="{{ jogador.id }}">{{ jogador.nome }}</label>
-          </div>
-        {% endfor %}
-      </div>
-      </br>
-      <div class="row">
-        <div class="col-md-12 text-center">
-          <button style="width: 50%; height: 50px;" class="btn btn-outline-success" type="submit">Cadastrar</button>
-        </div>
-      </div>
-    </br>
+      {% for jog in time_azul %}
+        <p>{{jog.posicao}} - {{jog.nome}}</p>
+      {% endfor %}
+
+    </div>   <!-- coluna -->
+
+    <div class="col-sm-6 col-md-6 col-lg-6" style="box-shadow:0 0 5px 0px grey; background-color: red;color: white;">
+      <h3 class="text-center"> TIME VERMELHO</h3>
+
+      {% for jog in time_vermelho %}
+        <p>{{jog.posicao}} - {{jog.nome}}</p>
+      {% endfor %}
+
+    </div>  <!-- coluna -->
+ 
+  </div> <!-- row-->
+
+
+
+  <h2 style="padding: 20px; font-weight: bold;;" class="text-center">TEMPORIZADOR</h2>
+
+  <div class="row text-center">
+    <div class="col-sm-12 col-md-12 col-lg-12" style="box-shadow:0 0 5px 0px grey; ">
+      <h2>
+          <p>Tempo restante:
+            <span id="timer" >{{pelada.tempo_pelada}}
+            </span>
+          </p>
+      </h2>
+      <button class="btn btn-success" id="reset">Reset Tempo</button>
+    <p></p>
     </div>
-  </form>
-<p></p>
-
-<div class="text-center">
-  <h3> Times Criados</h3>
-</div>
-{% for time in times  %}
-<p></p>
-<div class="row text-center">
-  <div class="col-md-4 text-center"> 
   </div>
-  <div class="col-md-4 text-center">
-    <h6 class="tituloTime" style="background-color: {{time.cor_time}};"><strong> {{time.nome_time}} </strong></h6>  
-    {% for item in time_jogador  %}
-    <div>
-      {% if item.time.nome_time == time.nome_time %}        
-        <label class=" text-center"> {{item.jogador.nome}} </label></br>
-      {% endif %}
+</br>
+
+
+<h2 style="padding: 20px; font-weight: bold;" class="text-center">PRÓXIMOS</h2>
+
+  <div class="row text-center">
+    <div class="col-sm-12 col-md-12 col-lg-12" style="box-shadow:0 0 5px 0px grey; ">
+      {{jogadores}}
+
     </div>
-    {% endfor %}
   </div>
-</div>  
-{% endfor %}
+</br>
 
-    
+
+</div> <!-- container-->
+
+
+
+
+<script>
+	var timerInterval;
+	
+
+	function startTimer(duration, display) {
+		var timer = duration, minutes, seconds;
+		timerInterval = setInterval(function () {
+			minutes = parseInt(timer / 60, 10);
+			seconds = parseInt(timer % 60, 10);
+
+			minutes = minutes < 10 ? "0" + minutes : minutes;
+			seconds = seconds < 10 ? "0" + seconds : seconds;
+
+			display.textContent = minutes + ":" + seconds;
+
+			if (--timer < 0) {
+				clearInterval(timerInterval);
+				display.textContent = "Time's up!";
+			}
+		}, 1000);
+	}
+
+	function resetTimer(duration, display) {
+		clearInterval(timerInterval);
+		display.textContent = duration / 60 + ":00";
+		startTimer(duration, display);
+	}
+
+	window.onload = function () {
+		var duration = {{pelada.tempo_pelada}}*60
+			display = document.querySelector('#timer');
+		startTimer(duration, display);
+
+		var resetButton = document.querySelector('#reset');
+		resetButton.onclick = function() {
+			resetTimer(duration, display);
+		}
+	};
+  </script>
+
 {% endblock %}

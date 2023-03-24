@@ -1,38 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<style>
+  label {
+    font-size: 200%;
+  }
+  .meuinput {
+    height: 70px;
+    font-size: 180%;
+  }
+
+</style>
+
+
+<div class="container">
   <div class="row">
-    <div class="col-sm-3"></div>
-    <div class="col-sm-6">
-      <h1>Cadastrar Pelada</h1>
-      <form method="POST" class="form-control text-center">
+    <div class="col-sm-12 col-md-12 col-lg-12 text-center" style="box-shadow:0 0 5px 0px grey; padding: 10px;">
+      <h1 style="padding: 15px;">CONFIGURAR PELADA</h1>
+      <form method="POST">
         {% csrf_token %}
-        <!-- {{ form.as_p }} -->
         <div class="row">
-          <div class="col-sm-2"></div>
-          <div class="col-sm-4">
-            <label for="tempo_pelada">tempo_pelada:</label>
-            <input class="form-control text-center" type="number" max="60" min="1" id="tempo_pelada" name="tempo_pelada" step="1" value="5" required/>
+          <div class="col-sm-12 col-lg-6" style="padding: 20px;">
+            <label for="tempo_pelada">Tempo de cada jogo (minutos):</label>
+            <input style="height: 70%;" class="form-control text-center" type="number" max="60" min="1" id="tempo_pelada" name="tempo_pelada" step="1" value="5" required/>
           </div>
-          <div class="col-sm-4">
-            <label for="quantidade_jogadores">Quantidade jogadores:</label>
-            <input class="form-control text-center" type="number" max="20" min="1" id="quantidade_jogadores" name="quantidade_jogadores" step="1" value="7" required/>
+          <div class="col-sm-12 col-lg-6" style="padding: 20px;">
+            <label for="quantidade_jogadores">Quantidade de jogadores</label>
+            <input style="height: 70%;" class="form-control text-center" type="number" max="20" min="1" id="quantidade_jogadores" name="quantidade_jogadores" step="1" value="7" required/>
           </div>
+          <p></p>          
+          <p></p>          
         </div>
-        <div class="row">
-          <div class="col-sm-2"></div>
-          <div class="col-sm-4">
-            <label for="valor_jogador">Valor por jogador:</label>
-            <input class="form-control text-center" type="number" max="60" min="1" id="valor_jogador" name="valor_jogador" value="10" required/>
-          </div>
-          <div class="col-sm-4">
-            <label for="local">Local do Jogo:</label>
-            <input class="form-control text-center" type="text" maxlength="50" id="local" name="local" value="Society" required/>
-          </div>
-        </div>
-        <p></p>
-        <button class="btn btn-outline-success" type="submit">Cadastrar</button>
+        <button class="btn btn-outline-success" type="submit" style="width: 60%; height: 70px; font-size: 2.5em;">Cadastrar</button>
       </form>
     </div>
+    <p></p>
   </div>
+</div>
 {% endblock %}

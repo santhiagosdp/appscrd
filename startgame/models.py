@@ -6,7 +6,7 @@ class Jogador(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     habil = models.BooleanField(default=True)
     nome = models.CharField(max_length=100)
-    posicao = models.CharField(max_length=50)
+    posicao = models.IntegerField(default=0)
     is_disponivel = models.BooleanField(default=True)
     is_selecionado = models.BooleanField(default=False)
 
@@ -15,8 +15,8 @@ class Pelada(models.Model):
     habil = models.BooleanField(default=True)
     tempo_pelada = models.IntegerField(default=5)
     quantidade_jogadores = models.IntegerField(default=7)
-    valor_jogador = models.FloatField(default=10)
-    local = models.CharField(default='Society', max_length=50)
+    #valor_jogador = models.FloatField(default=10)
+    #local = models.CharField(default='Society', max_length=50)
 
 class Time(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
