@@ -135,11 +135,13 @@ def cadastrar_time(request): #cadastro do time
         # seleciona os jogadores para o time azul
         time_azul = players.values_list('id', flat=True)[:n]
         azul = list(Jogador.objects.filter(id__in=time_azul))
+        azul = sorted(azul, key=lambda jogador: jogador.posicao)
 
         # seleciona os jogadores para o time vermelho
         time_vermelho = players.exclude(id__in=Jogador.objects.filter(id__in=time_azul)).values_list('id', flat=True)[:n]
         vermelho = list(Jogador.objects.filter(id__in=time_vermelho))
-
+        vermelho = sorted(vermelho, key=lambda jogador: jogador.posicao)
+        
         proximos = []
         for jogador in  players:
             if jogador not in azul and jogador not in vermelho:
