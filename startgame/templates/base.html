@@ -48,21 +48,22 @@
                 <a type="button"  class="btn btn-outline-danger" style="text-decoration: none; color: red" href="{% url 'logout' %}">{{usuario}}, sair</a>
             </div>
 
-        </div>
+        
 
-        <div class="row text-center" style="padding: 20px;">
+            <div class="row text-center" style="padding: 20px;">
 
-            <div class="col-sm-12 col-lg-12" style="height: 100px;">
-                <a type="button" class="btn btn-outline-primary menubt" href="{% url 'cadastrar_jogador' %}"> + JOGADORES</a>
-                <a type="button" class="btn btn-outline-primary menubt" href="{% url 'cadastrar_pelada' %}">CONFIGURAÇÕES</a>
+                <div class="col-sm-12 col-lg-12" style="height: 100px;">
+                    <a type="button" class="btn btn-outline-primary menubt" href="{% url 'cadastrar_jogador' %}"> + JOGADORES</a>
+                    <a type="button" class="btn btn-outline-primary menubt" href="{% url 'cadastrar_pelada' %}">CONFIGURAÇÕES</a>
+                </div>
+                <div class="col-sm-12 col-lg-12" style="height: 100px;">
+                    <a type="button" class="btn btn-outline-success menubtJG" href="{% url 'cadastrar_time' %}"> JOGAR</a>
+                    <!--
+                    <a type="button" class="btn btn-outline-success menubt" href="{% url 'temporizador' %}">TEMPORIZADOR</a>
+                    -->
+                </div>
+
             </div>
-            <div class="col-sm-12 col-lg-12" style="height: 100px;">
-                <a type="button" class="btn btn-outline-success menubtJG" href="{% url 'cadastrar_time' %}"> JOGAR</a>
-                <!--
-                <a type="button" class="btn btn-outline-success menubt" href="{% url 'temporizador' %}">TEMPORIZADOR</a>
-                -->
-            </div>
-
         </div>
           
         {% block content %}{% endblock %}

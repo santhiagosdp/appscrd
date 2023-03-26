@@ -29,7 +29,9 @@
  }
 </style>
 
-<div class="row" style="box-shadow:0 0 5px 0px grey; padding-bottom: 20px; padding: 20px;" >
+<div class="row" style="box-shadow:0 0 5px 0px grey; padding-bottom: 20px; padding: 20px; display: flex; justify-content: center; align-items: center;" >
+  <div class="col-sm-12 col-md-12 col-lg-12 text-center" style="box-shadow:0 0 5px 0px grey;">
+
   <h2 style="font-weight: bold; color: white; background-color: black;" class="text-center" >JOGANDO COM {{pelada.quantidade_jogadores}} JOGADORES POR TIME</h2>
 
   <div class="row">
@@ -69,18 +71,20 @@
       
     </div>
 
-    <div class="col-sm-12 col-md-12 col-lg-6" style="display: flex; justify-content: center; align-items: center; padding: 40px">
-      <div style="background-color: blue; width:40%; height: 100px;">
-        <a type="button" id='btnbluesai' href="?perdedor=azul" class="btnsaida" style="width:100%; height: 100%;"></a>
-      </div>
+    <div class="col-sm-12 col-md-12 col-lg-6" style=" padding: 40px; display: flex; justify-content: center; align-items: center;">
+      
+        <a type="button" id='btnbluesai' href="?perdedor=azul" class="btnsaida" style="width:40%; height: 100px;background-color: blue"></a>
 
-      <div style="width:20%;">
-        <h3 style="font-weight: bold; background-color: black; color: white;"> QUEM SAI? </h3>
-      </div>
+        <div style="width:40%; padding-left: 10px; padding-right: 5px;">
+          <h3 style="font-weight: bold; background-color: black; color: white;">
+              QUEM SAI?
+          </h3>
+        <label style="color: white;">(Empate, clica nas 2 cores)</label>
 
-      <div style="background-color: red; width:40%; height: 100px; ">
-        <a type="button" id='btnredsai' href="?perdedor=vermelho" class="btnsaida" style="width:100%; height: 100%; "></a>
-      </div>
+        </div>
+
+
+        <a type="button" id='btnredsai' href="?perdedor=vermelho" class="btnsaida" style="width:40%; height: 100px;background-color: red "></a>
 
     </div>
 
@@ -112,6 +116,7 @@
       </div>
     </div>
   </br>
+</div>
 </div>
 
 
