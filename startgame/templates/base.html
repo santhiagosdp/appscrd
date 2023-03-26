@@ -18,8 +18,15 @@
         font-weight: bold;
         font-size: 200%;
         font-family:sans-serif;
-
-
+    }
+    .menubtJG{
+        width: 80%;
+        height: 70%;
+        text-align: center;
+        align-items: center;
+        font-weight: bold;
+        font-size: 200%;
+        font-family:sans-serif;
     }
 </style>
 
@@ -46,12 +53,14 @@
         <div class="row text-center" style="padding: 20px;">
 
             <div class="col-sm-12 col-lg-12" style="height: 100px;">
-                <a type="button" class="btn btn-outline-primary menubt" href="{% url 'cadastrar_jogador' %}"> + JOGADOR</a>
-                <a type="button" class="btn btn-outline-success menubt" href="{% url 'cadastrar_pelada' %}">CONFIGURAÇÕES</a>
+                <a type="button" class="btn btn-outline-primary menubt" href="{% url 'cadastrar_jogador' %}"> + JOGADORES</a>
+                <a type="button" class="btn btn-outline-primary menubt" href="{% url 'cadastrar_pelada' %}">CONFIGURAÇÕES</a>
             </div>
             <div class="col-sm-12 col-lg-12" style="height: 100px;">
-                <a type="button" class="btn btn-outline-primary menubt" href="{% url 'cadastrar_time' %}"> + TIME</a>
+                <a type="button" class="btn btn-outline-success menubtJG" href="{% url 'cadastrar_time' %}"> JOGAR</a>
+                <!--
                 <a type="button" class="btn btn-outline-success menubt" href="{% url 'temporizador' %}">TEMPORIZADOR</a>
+                -->
             </div>
 
         </div>

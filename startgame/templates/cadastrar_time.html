@@ -17,106 +17,164 @@
   font-size: 20px;
   font-weight: bold;
  }
+ .btnsaida{
+  text-decoration: none;
+  color:white;
+ }
+ .btstart{
+    text-align: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 400%;
+ }
 </style>
 
-<div class="container ">
-
-  <h1 class="text-center" style=" font-weight: bold">JOGANDO COM {{pelada.quantidade_jogadores}} JOGADORES POR TIME</h1>
+<div class="row" style="box-shadow:0 0 5px 0px grey; padding-bottom: 20px; padding: 20px;" >
+  <h2 style="font-weight: bold; color: white; background-color: black;" class="text-center" >JOGANDO COM {{pelada.quantidade_jogadores}} JOGADORES POR TIME</h2>
 
   <div class="row">
-    <div class="col-sm-6 col-md-6 col-lg-6" style="box-shadow:0 0 5px 0px grey; background-color: blue;color: white;">
-      <h3 class="text-center"> TIME AZUL</h3>
+    <div class="col-sm-6 col-md-6 col-lg-6 text-center" style=" background-color: blue;color: white;">
+      <h3 class="text-center" style="background-color: white; color: blue; border: 1px solid blue;"> TIME AZUL</h3>
 
       {% for jog in time_azul %}
-        <p>{{jog.posicao}} - {{jog.nome}}</p>
+        <p>{{jog.nome}}</p>
       {% endfor %}
 
-    </div>   <!-- coluna -->
+    </div>   <!-- f coluna 1-->
 
-    <div class="col-sm-6 col-md-6 col-lg-6" style="box-shadow:0 0 5px 0px grey; background-color: red;color: white;">
-      <h3 class="text-center"> TIME VERMELHO</h3>
+    <div class="col-sm-6 col-md-6 col-lg-6 text-center" style="background-color: red;color: white;">
+      <h3 class="text-center" style="background-color: white; color: red; border: 1px solid red;"> TIME VERMELHO</h3>
 
       {% for jog in time_vermelho %}
-        <p>{{jog.posicao}} - {{jog.nome}}</p>
+        <p>{{jog.nome}}</p>
       {% endfor %}
 
-    </div>  <!-- coluna -->
+    </div>  <!-- f coluna 2 -->
  
   </div> <!-- row-->
 
+</div> <!-- div sombra-->
 
-
-  <h2 style="padding: 20px; font-weight: bold;;" class="text-center">TEMPORIZADOR</h2>
-
-  <div class="row text-center">
-    <div class="col-sm-12 col-md-12 col-lg-12" style="box-shadow:0 0 5px 0px grey; ">
+  <div class="row text-center " style="box-shadow:0 0 5px 0px grey; padding-bottom: 20px; padding: 20px; background-color: black;" >
+    <h2 style="font-weight: bold; color: black; background-color: white;" class="text-center" >TEMPORIZADOR</h2>
+    <div class="col-sm-12 col-md-12 col-lg-6">
       <h2>
-          <p>Tempo restante:
-            <span id="timer" >{{pelada.tempo_pelada}}
-            </span>
-          </p>
+          <p style="font-size: 200%; color: white;">TEMPO RESTANTE<br>
+            <span id="timer" style="color: red;" >
+              <strong>{{pelada.tempo_pelada}}</strong>
+            </span> Minuto(s)
+          </p>           
       </h2>
-      <button class="btn btn-success" id="reset">Reset Tempo</button>
-    <p></p>
+      <a class="btn btn-success btstart" type="button" id="btnstartime" onclick="startTimer({{pelada.tempo_pelada}})" style="width:70%; height: 100px;">INICIAR</a>
+      
     </div>
+
+    <div class="col-sm-12 col-md-12 col-lg-6" style="display: flex; justify-content: center; align-items: center; padding: 40px">
+      <div style="background-color: blue; width:40%; height: 100px;">
+        <a type="button" id='btnbluesai' href="?perdedor=azul" class="btnsaida" style="width:100%; height: 100%;"></a>
+      </div>
+
+      <div style="width:20%;">
+        <h3 style="font-weight: bold; background-color: black; color: white;"> QUEM SAI? </h3>
+      </div>
+
+      <div style="background-color: red; width:40%; height: 100px; ">
+        <a type="button" id='btnredsai' href="?perdedor=vermelho" class="btnsaida" style="width:100%; height: 100%; "></a>
+      </div>
+
+    </div>
+
   </div>
 </br>
 
 
-<h2 style="padding: 20px; font-weight: bold;" class="text-center">PRÓXIMOS</h2>
+<div class="row" style="box-shadow:0 0 5px 0px grey; padding-bottom: 20px; padding: 20px;" >
+  <h2 style="font-weight: bold; color: white; background-color: black;" class="text-center" >PRÓXIMOS</h2>
 
-  <div class="row text-center">
-    <div class="col-sm-12 col-md-12 col-lg-12" style="box-shadow:0 0 5px 0px grey; ">
-      {{jogadores}}
-
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12" style="box-shadow:0 0 5px 0px grey; ">
+        <table class="table table-striped" >
+          <thead>
+            <tr>
+              <th scope="col">POSIÇAO</th>
+              <th scope="col">NOME</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for jogador in proximos %}
+              <tr style="font-size: 30px;">
+                <th scope="row" >{{ jogador.posicao }}</th>
+                <td >{{ jogador.nome }}</td>
+                {% endfor %}
+              </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-</br>
-
-
-</div> <!-- container-->
-
-
+  </br>
+</div>
 
 
 <script>
-	var timerInterval;
-	
+	const timer = null;
+  //let timerInterval;
+  
+  //const link = document.getElementById('btnbluesai');  
+  //const link2 = document.getElementById('btnredsai');
+  const link3 = document.getElementById('btnstartime');
 
-	function startTimer(duration, display) {
-		var timer = duration, minutes, seconds;
-		timerInterval = setInterval(function () {
-			minutes = parseInt(timer / 60, 10);
-			seconds = parseInt(timer % 60, 10);
+		function startTimer(tempo) {     
+      disableLink();
+			var time = tempo*60;
+			var minutes = parseInt(time / 60, 10);
+			var seconds = parseInt(time % 60, 10);  
 
-			minutes = minutes < 10 ? "0" + minutes : minutes;
-			seconds = seconds < 10 ? "0" + seconds : seconds;
+      function updateTimer() {
+        document.getElementById("timer").innerHTML = minutes.toString() + ":" + (seconds < 10 ? "0" : "") + seconds.toString();
+        if (--seconds < 0) {
+          seconds = 59;
+          if (--minutes < 0) {
+            clearInterval(timer);
+            //ativando o botao redsai
+            enableLink()
+            alert("JOGO FINALIZADO!");
+          }
+        }
+      }
+  
+      updateTimer();
+      timer = setInterval(updateTimer, 1000);
+    }
 
-			display.textContent = minutes + ":" + seconds;
+    
 
-			if (--timer < 0) {
-				clearInterval(timerInterval);
-				display.textContent = "Time's up!";
-			}
-		}, 1000);
-	}
+    function disableLink() {
+      // link.style.pointerEvents = 'none';
+      // link2.style.pointerEvents = 'none';
+      link3.style.pointerEvents = 'none';
+    }
 
-	function resetTimer(duration, display) {
-		clearInterval(timerInterval);
-		display.textContent = duration / 60 + ":00";
-		startTimer(duration, display);
-	}
+    function enableLink() {
+      // link.style.pointerEvents = 'auto';
+      // link2.style.pointerEvents = 'auto';
+      link3.style.pointerEvents = 'auto';
+    }
 
-	window.onload = function () {
-		var duration = {{pelada.tempo_pelada}}*60
-			display = document.querySelector('#timer');
-		startTimer(duration, display);
-
-		var resetButton = document.querySelector('#reset');
-		resetButton.onclick = function() {
-			resetTimer(duration, display);
-		}
-	};
+    link.addEventListener('click', function(event) {
+      if (link.style.pointerEvents === 'none') {
+        event.preventDefault();
+      }
+    });
+    link2.addEventListener('click', function(event) {
+      if (link2.style.pointerEvents === 'none') {
+        event.preventDefault();
+      }
+    });
+    link3.addEventListener('click', function(event) {
+      if (link3.style.pointerEvents === 'none') {
+        event.preventDefault();
+      }
+    });
   </script>
 
 {% endblock %}

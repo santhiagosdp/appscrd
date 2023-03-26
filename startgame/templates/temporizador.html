@@ -1,53 +1,45 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Temporizador</title>
+	<script>
+		var countDownDate;
+		var x;
 
-{% block content %}
-  <div class="row" style="padding: 100px;">
-    <div class="col-md-4"></div>
-    <div class="col-md-4 text-center">
-      <h2>
-        Tempo restante: <span id="timer" >{{pelada.tempo_pelada}}</span>
-	  </h2>
-	  <button class="btn btn-success" id="reset">Reset Tempo</button>
-    </div>
-  </div>
-
-  <script>
-	var timerInterval;
-	
-
-	function startTimer(duration, display) {
-		var timer = duration, minutes, seconds;
-		timerInterval = setInterval(function () {
-			minutes = parseInt(timer / 60, 10);
-			seconds = parseInt(timer % 60, 10);
-
-			minutes = minutes < 10 ? "0" + minutes : minutes;
-			seconds = seconds < 10 ? "0" + seconds : seconds;
-
-			display.textContent = minutes + ":" + seconds;
-
-			if (--timer < 0) {
-				clearInterval(timerInterval);
-				display.textContent = "Time's up!";
-			}
-		}, 1000);
-	}
-
-	function resetTimer(duration, display) {
-		clearInterval(timerInterval);
-		display.textContent = duration / 60 + ":00";
-		startTimer(duration, display);
-	}
-
-	window.onload = function () {
-		var duration = {{tempo}}
-			display = document.querySelector('#timer');
-		startTimer(duration, display);
-
-		var resetButton = document.querySelector('#reset');
-		resetButton.onclick = function() {
-			resetTimer(duration, display);
+		function startTimer() {
+			countDownDate = new Date().getTime() + 60000; // Define o tempo em milissegundos
+			x = setInterval(function() {
+				var now = new Date().getTime();
+				var distance = countDownDate - now;
+				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+				document.getElementById("temporizador").innerHTML = minutes + "m " + seconds + "s ";
+				if (distance < 0) {
+					clearInterval(x);
+					document.getElementById("temporizador").innerHTML = "Tempo acabou!";
+					// Adicione aqui a lógica para mostrar o menu de inserção do placar do jogo
+				}
+			}, 1000);
 		}
-	};
-  </script>
-{% endblock %}
+	</script>
+</head>
+<body>
+	<h1>Temporizador</h1>
+	<p id="temporizador"></p>
+	<a onclick="startTimer()" type="button" style="font-size: 200%;">INICIARf</a>
+
+
+	<h1>Placar do Jogo</h1>
+	<form>
+		<label for="time1">Time AZUL</label>
+		<input type="number" id="placar1" name="placar1"><br><br>
+
+		<label for="time2">Time VERMELHO</label>
+		<input type="number" id="placar2" name="placar2"><br><br>
+
+
+		<label for="placar2">Placar do Time 2:</label>
+		<input type="submit" value="Salvar">
+	</form>
+</body>
+</html>

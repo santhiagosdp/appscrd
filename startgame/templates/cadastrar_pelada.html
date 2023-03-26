@@ -9,33 +9,34 @@
   .meuinput {
     height: 70px;
     font-size: 180%;
+    background-color:aliceblue;
+  }
+  .center-inputs {
+    display: flex;
+    
   }
 
 </style>
 
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm-12 col-md-12 col-lg-12 text-center" style="box-shadow:0 0 5px 0px grey; padding: 10px;">
-      <h1 style="padding: 15px;">CONFIGURAR PELADA</h1>
+  <div class="row text-center" style="box-shadow:0 0 5px 0px grey; padding: 10px;">
+      <h1 class="text-center" style="padding: 15px;">CONFIGURAR PELADA</h1>
       <form method="POST">
         {% csrf_token %}
         <div class="row">
-          <div class="col-sm-12 col-lg-6" style="padding: 20px;">
+          <div class="col-sm-12 col-lg-6 center-inputs" style="padding: 20px;">
             <label for="tempo_pelada">Tempo de cada jogo (minutos):</label>
-            <input style="height: 70%;" class="form-control text-center" type="number" max="60" min="1" id="tempo_pelada" name="tempo_pelada" step="1" value="5" required/>
+            <input style="height: 100px; width: 50%; background-color:aliceblue" class="form-control text-center" type="number" pattern="[0-9]*" max="60" min="1" id="tempo_pelada" name="tempo_pelada" step="1" value="10" required/>
           </div>
-          <div class="col-sm-12 col-lg-6" style="padding: 20px;">
+          <div class="col-sm-12 col-lg-6 center-inputs" style="padding: 20px;">
             <label for="quantidade_jogadores">Quantidade de jogadores</label>
-            <input style="height: 70%;" class="form-control text-center" type="number" max="20" min="1" id="quantidade_jogadores" name="quantidade_jogadores" step="1" value="7" required/>
+            <input style="height: 100px; width: 50%; background-color:aliceblue" class="form-control text-center" type="number" pattern="[0-9]*" max="20" min="1" id="quantidade_jogadores" name="quantidade_jogadores" step="1" value="7" required/>
           </div>
           <p></p>          
           <p></p>          
         </div>
-        <button class="btn btn-outline-success" type="submit" style="width: 60%; height: 70px; font-size: 2.5em;">Cadastrar</button>
+        <button class="btn btn-outline-success" type="submit" style="width: 60%; height: 100px; font-size: 2.5em;">Cadastrar</button>
       </form>
-    </div>
     <p></p>
   </div>
-</div>
 {% endblock %}
