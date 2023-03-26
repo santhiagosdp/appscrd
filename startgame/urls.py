@@ -2,11 +2,12 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    #path('', views.index, name='index'),
+    path('', views.cadastrar_jogador, name='cadastrar_jogador'),
     path('cadastrar_jogador/', views.cadastrar_jogador, name='cadastrar_jogador'),
     path('cadastrar_time/', views.cadastrar_time, name='cadastrar_time'),
     path('cadastrar_pelada/', views.cadastrar_pelada, name='cadastrar_pelada'),
-    path('temporizador/', views.temporizador, name='temporizador'),
+    #path('temporizador/', views.temporizador, name='temporizador'),
 
     
     path('accounts/login/', views.login_view, name='login'),

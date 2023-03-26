@@ -53,14 +53,10 @@
 
         <div class="row minha-div">
 
-            <div class="col-sm-5 col-lg-4 btn text-center">
-                <a type="button" class="btn btn-outline-secondary" style="text-decoration: none; color: white; width: 30%; font-size: 100%;"  href="{% url 'index' %}">Início</a>
-            </div>
-
-            <div class="col-sm-1 col-lg-4"></div>
-
-            <div class="col-sm-5 col-lg-4 text-center">
-                <a type="button"  class="btn btn-outline-danger" style="text-decoration: none; color: red" href="{% url 'logout' %}">{{usuario}}, sair</a>
+            <div class="row ">
+                <div class="col-md-12 btn text-end">
+                    <a type="button" class="btn btn-outline-danger" style="text-decoration: none; color: white" href="{% url 'logout' %}">{{usuario}}, sair</a>
+                </div>
             </div>
 
         
@@ -73,9 +69,7 @@
                 </div>
                 <div class="col-sm-12 col-lg-12" style="height: 100px;">
                     <a type="button" class="btn btn-outline-success menubtJG" href="{% url 'cadastrar_time' %}"> JOGAR</a>
-                    <!--
-                    <a type="button" class="btn btn-outline-success menubt" href="{% url 'temporizador' %}">TEMPORIZADOR</a>
-                    -->
+
                 </div>
 
             </div>
