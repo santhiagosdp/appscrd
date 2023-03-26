@@ -224,7 +224,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('index')
+            return redirect('cadastrar_jogador')
         else:
             error = "Invalid username or password"
             return render(request, 'login.html', {'error': error})
@@ -244,7 +244,7 @@ def new_user(request):
         form_usuario = UserCreationForm(request.POST)
         if form_usuario.is_valid():
             form_usuario.save()
-            return redirect('index')
+            return redirect('cadastrar_jogador')
     else:
         form_usuario = UserCreationForm()
     
