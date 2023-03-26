@@ -61,14 +61,16 @@
     <h2 style="font-weight: bold; color: black; background-color: white;" class="text-center" >TEMPORIZADOR</h2>
     <div class="col-sm-12 col-md-12 col-lg-6">
       <h2>
-          <p style="font-size: 200%; color: white;">TEMPO RESTANTE<br>
+          <p style="font-size: 100%; color: white;">TEMPO RESTANTE<br>
             <span id="timer" style="color: red;" >
               <strong>{{pelada.tempo_pelada}}</strong>
             </span> Minuto(s)
           </p>           
       </h2>
-      <a class="btn btn-success btstart" type="button" id="btnstartime" onclick="startTimer({{pelada.tempo_pelada}})" style="width:70%; height: 100px;">INICIAR</a>
-      
+      <a class="btn btn-success btstart" type="button" id="btnstartime" onclick="startTimer({{pelada.tempo_pelada}})" style="width: 70%; height: 100px;">INICIAR</a>
+    </br>
+      <a class="btn btn-danger btstart" type="button" id="btnpausetime" onclick="pauseTimer()" style="width: 30%; height: 100px;">Pause</a>
+      <a class="btn btn-warning btstart" type="button" id="btnresumetime" onclick="resumeTimer()" style="width: 30%; height: 100px;">Play</a>
     </div>
 
     <div class="col-sm-12 col-md-12 col-lg-6" style=" padding: 40px; display: flex; justify-content: center; align-items: center;">
@@ -123,6 +125,7 @@
 <script>
 	const timer = null;
   //let timerInterval;
+  let paused = false;
   
   //const link = document.getElementById('btnbluesai');  
   //const link2 = document.getElementById('btnredsai');
@@ -130,11 +133,13 @@
 
 		function startTimer(tempo) {     
       disableLink();
+      paused = false;
 			var time = tempo*60;
 			var minutes = parseInt(time / 60, 10);
 			var seconds = parseInt(time % 60, 10);  
 
       function updateTimer() {
+        if (paused) return; // adicionando verificação para pausa
         document.getElementById("timer").innerHTML = minutes.toString() + ":" + (seconds < 10 ? "0" : "") + seconds.toString();
         if (--seconds < 0) {
           seconds = 59;
@@ -150,6 +155,17 @@
       updateTimer();
       timer = setInterval(updateTimer, 1000);
     }
+
+    function pauseTimer() {
+      paused = true;
+      clearInterval(timer);
+    }
+
+    function resumeTimer() {
+      paused = false;
+      timer = setInterval(updateTimer, 1000);
+    }
+
 
     
 
