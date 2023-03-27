@@ -141,7 +141,7 @@ def cadastrar_time(request): #cadastro do time
         time_vermelho = players.exclude(id__in=Jogador.objects.filter(id__in=time_azul)).values_list('id', flat=True)[:n]
         vermelho = list(Jogador.objects.filter(id__in=time_vermelho))
         vermelho = sorted(vermelho, key=lambda jogador: jogador.posicao)
-        
+
         proximos = []
         for jogador in  players:
             if jogador not in azul and jogador not in vermelho:
@@ -156,7 +156,45 @@ def cadastrar_time(request): #cadastro do time
 
 ###### Após jogo, vai vir o GET com o perdedor e vou fazer as trocas
         get_perdedor = request.GET.get('perdedor')
+        
         if get_perdedor:
+##EMPATE AZUL PRIORIDADE
+            if get_perdedor == "prioridadeazul": ## caso de empate com prioridade azul
+                aux = 1
+                for jogador in proximos:
+                    jogador.posicao = aux
+                    jogador.save()
+                    aux = aux+1
+                for jogador in azul:
+                    jogador.posicao = aux
+                    jogador.save()
+                    aux = aux+1
+                for jogador in vermelho:
+                    jogador.posicao = aux
+                    jogador.save()
+                    aux = aux+1
+                return redirect('cadastrar_time')
+
+##EMPATE VERMELHO PRIORIDADE
+            if get_perdedor == "prioridadevermelho": ## caso de empate com prioridade vermelho
+                aux = 1
+                for jogador in proximos:
+                    jogador.posicao = aux
+                    jogador.save()
+                    aux = aux+1
+                for jogador in vermelho:
+                    jogador.posicao = aux
+                    jogador.save()
+                    aux = aux+1
+                for jogador in azul:
+                    jogador.posicao = aux
+                    jogador.save()
+                    aux = aux+1
+
+                return redirect('cadastrar_time')
+                       
+
+##se nao for empate, PEGA PERDEDOR E VENCEDOR
             if get_perdedor == "azul":
                 perdedor = azul
                 vencedor = vermelho
@@ -164,19 +202,19 @@ def cadastrar_time(request): #cadastro do time
                 perdedor = vermelho
                 vencedor = azul
 
-            # pegando posicao do ultimo na lista de proximo
+# pegando posicao do ultimo na lista de proximo
             aux = 0
             for jogador in proximos:
                 aux = jogador.posicao
-            #acrescentando cada perdedor por ordem ao final da lista de proximo 
+#acrescentando cada perdedor por ordem ao final da lista de proximo 
             for perd in perdedor:
                 perd.posicao = aux+1
                 proximos.append(perd)
                 aux = aux+1
 
+##AZUL PERDE E VERMELHO GANHA
             # se azul perdeu, o vencedor (vermelho) tem que ser o segundo a criar times, criando primeiro o time dos proximos (azul)
             if get_perdedor == "azul":
-                #qtd_jgs_time = len(perdedor)
                 aux = 1
                 for jogador in proximos:
                     if aux > pelada.quantidade_jogadores and aux < pelada.quantidade_jogadores*2: # qtd_jgs_time:
@@ -187,7 +225,9 @@ def cadastrar_time(request): #cadastro do time
                     jogador.posicao = aux
                     jogador.save()
                     aux = aux+1
-                return redirect('cadastrar_time')
+                return redirect('cadastrar_time') 
+                       
+##VERMELHO PERDE E AZUL GANHA
 
             else: # se vermelho perder, faz isso normal e cria o azul vencedor primeiro
                 #atualizo as listas no banco de dados pra gerar novos times
@@ -214,8 +254,6 @@ def cadastrar_time(request): #cadastro do time
         return render(request, 'cadastrar_time.html', context)
     else:
         return redirect('cadastrar_pelada')
-
-
 
 
 

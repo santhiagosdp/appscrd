@@ -10,11 +10,12 @@
   justify-content: center;
  }
  h6{
-  font-size: 20px;
+  font-size: 30px;
+  font-weight: bold;
   text-align: center;
  }
  p{
-  font-size: 20px;
+  font-size: 30px;
   font-weight: bold;
  }
  .btnsaida{
@@ -26,6 +27,16 @@
     align-items: center;
     font-weight: bold;
     font-size: 400%;
+ }
+
+ .btnempate{
+  text-align: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 350%;
+  font-family: serif;
+  text-decoration: none;
+  color: black;
  }
 </style>
 
@@ -59,7 +70,7 @@
 
   <div class="row text-center " style="box-shadow:0 0 5px 0px grey; padding-bottom: 20px; padding: 20px; background-color: black;" >
     <h2 style="font-weight: bold; color: black; background-color: white;" class="text-center" >TEMPORIZADOR</h2>
-    <div class="col-sm-12 col-md-12 col-lg-6">
+    <div class="col-sm-12 col-md-12 col-lg-12">
       <h2>
           <p style="font-size: 100%; color: white;">TEMPO RESTANTE<br>
             <span id="timer" style="color: red;" >
@@ -68,58 +79,54 @@
           </p>           
       </h2>
       <a class="btn btn-success btstart" type="button" id="btnstartime" onclick="startTimer({{pelada.tempo_pelada}})" style="width: 70%; height: 100px;">INICIAR</a>
-    </br>
+      </br>
       <a class="btn btn-danger btstart" type="button" id="btnpausetime" onclick="pauseTimer()" style="width: 30%; height: 100px;">Pause</a>
-      <a class="btn btn-warning btstart" type="button" id="btnresumetime" onclick="resumeTimer()" style="width: 30%; height: 100px;">Play</a>
+      <a class="btn btn-warning btstart" type="button" id="btnresumetime" onclick="resumeTimer()" style="width: 30%; height: 100px; color: white;">Play</a>
     </div>
-
-    <div class="col-sm-12 col-md-12 col-lg-6" style=" padding: 40px; display: flex; justify-content: center; align-items: center;">
-      
-        <a type="button" id='btnbluesai' href="?perdedor=azul" class="btnsaida" style="width:40%; height: 100px;background-color: blue"></a>
-
-        <div style="width:40%; padding-left: 10px; padding-right: 5px;">
-          <h3 style="font-weight: bold; background-color: black; color: white;">
-              QUEM SAI?
-          </h3>
-        <label style="color: white;">(Empate, clica nas 2 cores)</label>
-
-        </div>
-
-
-        <a type="button" id='btnredsai' href="?perdedor=vermelho" class="btnsaida" style="width:40%; height: 100px;background-color: red "></a>
-
-    </div>
-
   </div>
-</br>
+  
+  </br>
+  <div class="row" style="background-color: black; display: flex; justify-content: center; align-items: center;" >
+    <h2 style="font-weight: bold; color: black; background-color: white;" class="text-center" >QUEM SAI?</h2>
+      <div class="row col-sm-4 col-md-4 col-lg-4">
+        <a type="button"  href="?perdedor=azul"  class="btnempate"style="width:90%; height: 100px;background-color: blue"></a>
+      </div>
+      <div class="row col-sm-4 col-md-4 col-lg-4">
+        <a type="button" href="?perdedor=prioridade" class="btnempate" style="width:90%; height: 100px;background-color: white ">EMPATE</a>
+      </div>
+      <div class="row col-sm-4 col-md-4 col-lg-4">
+        <a type="button" href="?perdedor=vermelho" class="btnempate" style="width:90%; height: 100px; background-color: red "></a>
+      </div>
+      <p></p>
+  </div>
+
 
 
 <div class="row" style="box-shadow:0 0 5px 0px grey; padding-bottom: 20px; padding: 20px;" >
   <h2 style="font-weight: bold; color: white; background-color: black;" class="text-center" >PRÓXIMOS</h2>
 
-    <div class="row">
-      <div class="col-sm-12 col-md-12 col-lg-12" style="box-shadow:0 0 5px 0px grey; ">
-        <table class="table table-striped" >
-          <thead>
-            <tr>
-              <th scope="col">POSIÇAO</th>
-              <th scope="col">NOME</th>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12" style="box-shadow:0 0 5px 0px grey; ">
+      <table class="table table-striped" >
+        <thead>
+          <tr>
+            <th scope="col">POSIÇAO</th>
+            <th scope="col">NOME</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for jogador in proximos %}
+            <tr style="font-size: 30px;">
+              <th scope="row" >{{ jogador.posicao }}</th>
+              <td >{{ jogador.nome }}</td>
+              {% endfor %}
             </tr>
-          </thead>
-          <tbody>
-            {% for jogador in proximos %}
-              <tr style="font-size: 30px;">
-                <th scope="row" >{{ jogador.posicao }}</th>
-                <td >{{ jogador.nome }}</td>
-                {% endfor %}
-              </tr>
-          </tbody>
-        </table>
-      </div>
+        </tbody>
+      </table>
     </div>
+  </div> <!-- ROW-->
   </br>
-</div>
-</div>
+</div> <!-- sombra div-->
 
 
 <script>
