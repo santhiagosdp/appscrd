@@ -40,6 +40,46 @@
  }
 </style>
 
+
+<!--  MODAL PARA DIV SUPENSO COM A PRIORIDADE DO EMPATE -->
+
+<!-- Modal -->
+<div class="modal fade" id="modalprioridade" tabindex="-1" aria-labelledby="modalprioridadelabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalprioridadeLabel">Qual a prioridade para próximos? </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="get" class="form-inline">
+        {% csrf_token %}
+        <div class="modal-body"> <!-- INICIO modal-body-->
+
+          <!-- <a type="button"  class="btn btn-secondary" href="?perdedor=prioridadeazul" style=" width: 50px; height: 100px;background-color: blue"></a>
+          <a type="button"  class="btn btn-secondary" href="?perdedor=prioridadevermelho" style=" width: 50%; height: 100px;background-color: red"></a>
+          -->
+          <div class="row col-sm-6 col-md-6 col-lg-6">
+            <a type="button"  href="?perdedor=prioridadeazul"  class="btnempate"style=" height: 100px;background-color: blue"></a>
+          </div>
+          
+          <div class="row col-sm-6 col-md-6 col-lg-6">
+            <a type="button" href="?perdedor=prioridadevermelho" class="btnempate" style=" height: 100px; background-color: red "></a>
+          </div>
+
+        </div> <!-- FIM modal-body-->
+        <div class="modal-footer">
+          <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--  FINAL DA MODAL DA PRIORIDADE MODAL-->
+
+
+
+
 <div class="row" style="box-shadow:0 0 5px 0px grey; padding-bottom: 20px; padding: 20px; display: flex; justify-content: center; align-items: center;" >
   <div class="col-sm-12 col-md-12 col-lg-12 text-center" style="box-shadow:0 0 5px 0px grey;">
 
@@ -86,20 +126,19 @@
   </div>
   
   </br>
-  <div class="row" style="background-color: black; display: flex; justify-content: center; align-items: center;" >
+  <div class="row" id="divSuspenso" style="background-color: black; display:flex; justify-content: center; align-items: center;" >
     <h2 style="font-weight: bold; color: black; background-color: white;" class="text-center" >QUEM SAI?</h2>
       <div class="row col-sm-4 col-md-4 col-lg-4">
         <a type="button"  href="?perdedor=azul"  class="btnempate"style="width:90%; height: 100px;background-color: blue"></a>
       </div>
       <div class="row col-sm-4 col-md-4 col-lg-4">
-        <a type="button" href="?perdedor=prioridade" class="btnempate" style="width:90%; height: 100px;background-color: white ">EMPATE</a>
+        <button type="button" data-toggle="modal" data-target="#modalprioridade" class="btnempate" style="width:90%; height: 100px;background-color: white ">EMPATE</button>
       </div>
       <div class="row col-sm-4 col-md-4 col-lg-4">
         <a type="button" href="?perdedor=vermelho" class="btnempate" style="width:90%; height: 100px; background-color: red "></a>
       </div>
       <p></p>
   </div>
-
 
 
 <div class="row" style="box-shadow:0 0 5px 0px grey; padding-bottom: 20px; padding: 20px;" >
@@ -130,15 +169,19 @@
 
 
 <script>
-	const timer = null;
+	let timer = null;
   //let timerInterval;
   let paused = false;
+  var div = document.getElementById("divSuspenso");
+  var divtemp = document.getElementById("divtemp");
   
   //const link = document.getElementById('btnbluesai');  
   //const link2 = document.getElementById('btnredsai');
   const link3 = document.getElementById('btnstartime');
 
+    
 		function startTimer(tempo) {     
+      div.style.display = "none";
       disableLink();
       paused = false;
 			var time = tempo*60;
@@ -152,8 +195,9 @@
           seconds = 59;
           if (--minutes < 0) {
             clearInterval(timer);
-            //ativando o botao redsai
-            enableLink()
+            enableLink();            
+            div.style.display = "flex";
+            divtemp.style.display = "none";
             alert("JOGO FINALIZADO!");
           }
         }
