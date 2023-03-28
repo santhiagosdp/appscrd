@@ -167,7 +167,70 @@
   </br>
 </div> <!-- sombra div-->
 
+<script>
+  let timer = null;
+  let paused = false;
+  let div = document.getElementById("divSuspenso");
+  let divtemp = document.getElementById("divtemp");
+  let updateTimer = null; // definir como variável global
 
+  const link3 = document.getElementById('btnstartime');
+
+  function startTimer(tempo) {     
+    div.style.display = "none";
+    disableLink();
+    const time = 3; //tempo*60;
+    let minutes = parseInt(time / 60, 10);
+    let seconds = parseInt(time % 60, 10);  
+
+    updateTimer = function() { // definir como função global
+      if (paused) return;
+      document.getElementById("timer").innerHTML = minutes.toString() + ":" + (seconds < 10 ? "0" : "") + seconds.toString();
+      if (--seconds < 0) {
+        seconds = 59;
+        if (--minutes < 0) {
+          clearInterval(timer);
+          enableLink();            
+          div.style.display = "flex";
+          divtemp.style.display = "none";
+          alert("JOGO FINALIZADO!");
+        }
+      }
+    };
+    updateTimer();
+    timer = setInterval(updateTimer, 1000);
+  }
+
+  function pauseTimer() {
+    paused = true;
+    div.style.display = "flex";
+    clearInterval(timer);
+  }
+
+  function resumeTimer() {
+    paused = false;
+    div.style.display = "none";
+    timer = setInterval(updateTimer, 1000);
+  }
+
+  function disableLink() {
+    link3.style.pointerEvents = 'none';
+  }
+
+  function enableLink() {
+    link3.style.pointerEvents = 'auto';
+  }
+
+  link3.addEventListener('click', function(event) {
+    if (link3.style.pointerEvents === 'none') {
+      event.preventDefault();
+    }
+  });
+
+</script>
+
+
+<!-- 
 <script>
 	let timer = null;
   //let timerInterval;
@@ -180,73 +243,60 @@
   const link3 = document.getElementById('btnstartime');
 
     
-		function startTimer(tempo) {     
-      div.style.display = "none";
-      disableLink();
-      paused = false;
-			var time = tempo*60;
-			var minutes = parseInt(time / 60, 10);
-			var seconds = parseInt(time % 60, 10);  
+	function startTimer(tempo) {     
+    div.style.display = "none";
+    disableLink();
+    var time = 3; //tempo*60;
+    var minutes = parseInt(time / 60, 10);
+    var seconds = parseInt(time % 60, 10);  
 
-      function updateTimer() {
-        if (paused) return; // adicionando verificação para pausa
-        document.getElementById("timer").innerHTML = minutes.toString() + ":" + (seconds < 10 ? "0" : "") + seconds.toString();
-        if (--seconds < 0) {
-          seconds = 59;
-          if (--minutes < 0) {
-            clearInterval(timer);
-            enableLink();            
-            div.style.display = "flex";
-            divtemp.style.display = "none";
-            alert("JOGO FINALIZADO!");
-          }
+    function updateTimer() {
+      if (paused) return; // adicionando verificação para pausa
+      document.getElementById("timer").innerHTML = minutes.toString() + ":" + (seconds < 10 ? "0" : "") + seconds.toString();
+      if (--seconds < 0) {
+        seconds = 59;
+        if (--minutes < 0) {
+          clearInterval(timer);
+          enableLink();            
+          div.style.display = "flex";
+          divtemp.style.display = "none";
+          alert("JOGO FINALIZADO!");
         }
       }
+    }
+    updateTimer();
+    timer = setInterval(updateTimer, 1000);
+  }
+
+
+  function pauseTimer() {
+    paused = true;
+    clearInterval(timer);
+  }
+
+
+  function resumeTimer() {
+    let paused = false;
+    timer = setInterval(updateTimer, 1000);
+  }
+
+
+  function disableLink() {
+    link3.style.pointerEvents = 'none';
+  }
+
+  function enableLink() {
+    link3.style.pointerEvents = 'auto';
+  }
+
   
-      updateTimer();
-      timer = setInterval(updateTimer, 1000);
+  link3.addEventListener('click', function(event) {
+    if (link3.style.pointerEvents === 'none') {
+      event.preventDefault();
     }
+  });
 
-    function pauseTimer() {
-      paused = true;
-      clearInterval(timer);
-    }
-
-    function resumeTimer() {
-      paused = false;
-      timer = setInterval(updateTimer, 1000);
-    }
-
-
-    
-
-    function disableLink() {
-      // link.style.pointerEvents = 'none';
-      // link2.style.pointerEvents = 'none';
-      link3.style.pointerEvents = 'none';
-    }
-
-    function enableLink() {
-      // link.style.pointerEvents = 'auto';
-      // link2.style.pointerEvents = 'auto';
-      link3.style.pointerEvents = 'auto';
-    }
-
-    link.addEventListener('click', function(event) {
-      if (link.style.pointerEvents === 'none') {
-        event.preventDefault();
-      }
-    });
-    link2.addEventListener('click', function(event) {
-      if (link2.style.pointerEvents === 'none') {
-        event.preventDefault();
-      }
-    });
-    link3.addEventListener('click', function(event) {
-      if (link3.style.pointerEvents === 'none') {
-        event.preventDefault();
-      }
-    });
-  </script>
+</script>
+-->
 
 {% endblock %}
