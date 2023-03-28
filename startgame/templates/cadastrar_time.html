@@ -86,8 +86,8 @@
   <h2 style="font-weight: bold; color: white; background-color: black;" class="text-center" >JOGANDO COM {{pelada.quantidade_jogadores}} JOGADORES POR TIME</h2>
 
   <div class="row">
-    <div class="col-sm-6 col-md-6 col-lg-6 text-center" style=" background-color: blue;color: white;">
-      <h3 class="text-center" style="background-color: white; color: blue; border: 1px solid blue;"> TIME AZUL</h3>
+    <div class="col-sm-6 col-md-6 col-lg-6 text-center" style=" background-color: {{pelada.corTime01}};color: white;">
+      <h3 class="text-center" style="background-color: white; color: {{pelada.corTime01}}; border: 1px solid  {{pelada.corTime01}};"> TIME 01</h3>
 
       {% for jog in time_azul %}
         <p>{{jog.nome}}</p>
@@ -95,8 +95,8 @@
 
     </div>   <!-- f coluna 1-->
 
-    <div class="col-sm-6 col-md-6 col-lg-6 text-center" style="background-color: red;color: white;">
-      <h3 class="text-center" style="background-color: white; color: red; border: 1px solid red;"> TIME VERMELHO</h3>
+    <div class="col-sm-6 col-md-6 col-lg-6 text-center" style="background-color: {{pelada.corTime02}};color: white;">
+      <h3 class="text-center" style="background-color: white; color:{{pelada.corTime02}}; border: 1px solid  {{pelada.corTime02}};"> TIME 02</h3>
 
       {% for jog in time_vermelho %}
         <p>{{jog.nome}}</p>

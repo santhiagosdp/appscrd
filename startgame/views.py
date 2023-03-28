@@ -96,12 +96,17 @@ def cadastrar_pelada(request):
         deletarpelada(request)
         tempo_pelada = request.POST.get('tempo_pelada')
         quantidade_jogadores = request.POST.get('quantidade_jogadores')
+        corTime01 = request.POST.get('corTime01')
+        corTime02 = request.POST.get('corTime02')
+        
         #valor_jogador = request.POST.get('valor_jogador')
         #local = request.POST.get('local')
         pelada = Pelada.objects.create(
             usuario = request.user,
             tempo_pelada=tempo_pelada,
             quantidade_jogadores=quantidade_jogadores,
+            corTime02 = corTime02,
+            corTime01 = corTime01,
             #valor_jogador=valor_jogador,
             #local=local.upper()
             )
@@ -281,7 +286,7 @@ def cadastrar_time(request): #cadastro do time
             'time_vermelho' : vermelho,
             'time_azul' : azul,
             'usuario' : request.user, 
-            'pelada': pelada,  #quantidade de jogadores por time
+            'pelada': pelada,  #quantidade de jogadores por time e cores
         }
         return render(request, 'cadastrar_time.html', context)
     else:

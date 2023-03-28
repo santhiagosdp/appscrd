@@ -15,6 +15,8 @@ class Pelada(models.Model):
     habil = models.BooleanField(default=True)
     tempo_pelada = models.IntegerField(default=5)
     quantidade_jogadores = models.IntegerField(default=7)
+    corTime01 = models.CharField(max_length=20, default='#ff0000')
+    corTime02 = models.CharField(max_length=20, default='#0000ff')
     #valor_jogador = models.FloatField(default=10)
     #local = models.CharField(default='Society', max_length=50)
 
