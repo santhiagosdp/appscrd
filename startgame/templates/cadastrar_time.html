@@ -179,7 +179,7 @@
   function startTimer(tempo) {     
     div.style.display = "none";
     disableLink();
-    const time = 3; //tempo*60;
+    const time = tempo*60;
     let minutes = parseInt(time / 60, 10);
     let seconds = parseInt(time % 60, 10);  
 
@@ -230,73 +230,5 @@
 </script>
 
 
-<!-- 
-<script>
-	let timer = null;
-  //let timerInterval;
-  let paused = false;
-  var div = document.getElementById("divSuspenso");
-  var divtemp = document.getElementById("divtemp");
-  
-  //const link = document.getElementById('btnbluesai');  
-  //const link2 = document.getElementById('btnredsai');
-  const link3 = document.getElementById('btnstartime');
-
-    
-	function startTimer(tempo) {     
-    div.style.display = "none";
-    disableLink();
-    var time = 3; //tempo*60;
-    var minutes = parseInt(time / 60, 10);
-    var seconds = parseInt(time % 60, 10);  
-
-    function updateTimer() {
-      if (paused) return; // adicionando verificação para pausa
-      document.getElementById("timer").innerHTML = minutes.toString() + ":" + (seconds < 10 ? "0" : "") + seconds.toString();
-      if (--seconds < 0) {
-        seconds = 59;
-        if (--minutes < 0) {
-          clearInterval(timer);
-          enableLink();            
-          div.style.display = "flex";
-          divtemp.style.display = "none";
-          alert("JOGO FINALIZADO!");
-        }
-      }
-    }
-    updateTimer();
-    timer = setInterval(updateTimer, 1000);
-  }
-
-
-  function pauseTimer() {
-    paused = true;
-    clearInterval(timer);
-  }
-
-
-  function resumeTimer() {
-    let paused = false;
-    timer = setInterval(updateTimer, 1000);
-  }
-
-
-  function disableLink() {
-    link3.style.pointerEvents = 'none';
-  }
-
-  function enableLink() {
-    link3.style.pointerEvents = 'auto';
-  }
-
-  
-  link3.addEventListener('click', function(event) {
-    if (link3.style.pointerEvents === 'none') {
-      event.preventDefault();
-    }
-  });
-
-</script>
--->
 
 {% endblock %}
