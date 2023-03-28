@@ -141,28 +141,103 @@
   </div>
 
 
-<div class="row" style="box-shadow:0 0 5px 0px grey; padding-bottom: 20px; padding: 20px;" >
+<div class="row" style="box-shadow:0 0 5px 0px grey; padding-bottom: 20px; padding: 20px; display: flex; justify-content: center; align-items: center;" >
   <h2 style="font-weight: bold; color: white; background-color: black;" class="text-center" >PRÓXIMOS</h2>
 
   <div class="row">
-    <div class="col-sm-12 col-md-12 col-lg-12" style="box-shadow:0 0 5px 0px grey; ">
-      <table class="table table-striped" >
-        <thead>
-          <tr>
-            <th scope="col">POSIÇAO</th>
-            <th scope="col">NOME</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for jogador in proximos %}
+    <div class="row">
+      <div class="col-sm-6 col-md-6 col-lg-6" style="box-shadow:0 0 5px 0px grey; ">
+        <h2 class="text-center" style="background-color: black; color: white;"> TIME 01 PRÓXIMO </h2>
+        <table class="table" >
+          <thead>
+            <tr>
+              <th scope="col">POSIÇAO</th>
+              <th scope="col">NOME</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {% for jogador in proximos01 %}
             <tr style="font-size: 30px;">
               <th scope="row" >{{ jogador.posicao }}</th>
               <td >{{ jogador.nome }}</td>
-              {% endfor %}
             </tr>
-        </tbody>
-      </table>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="col-sm-6 col-md-6 col-lg-6" style="box-shadow:0 0 5px 0px grey;">
+        <h2 class="text-center" style="background-color: black; color: white;"> TIME 02 PRÓXIMO </h2>
+        <table class="table" >
+          <thead>
+            <tr>
+              <th scope="col">POSIÇAO</th>
+              <th scope="col">NOME</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {% for jogador in proximos02 %}
+            <tr style="font-size: 30px;">
+              <th scope="row" >{{ jogador.posicao }}</th>
+              <td >{{ jogador.nome }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div> <!-- FIM LINHA DAS DIVS PROXIMOS-->
+
+    <P></P>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-6 col-lg-6" style="box-shadow:0 0 5px 0px grey; padding: 20px;">
+        <h2 class="text-center" style="background-color: black; color: white;"> TIME 03 PRÓXIMO </h2>
+        <table class="table" >
+          <thead>
+            <tr>
+              <th scope="col">POSIÇAO</th>
+              <th scope="col">NOME</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {% for jogador in proximos03 %}
+            <tr style="font-size: 30px;">
+              <th scope="row" >{{ jogador.posicao }}</th>
+              <td >{{ jogador.nome }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-sm-6 col-md-6 col-lg-6" style="box-shadow:0 0 5px 0px grey; padding: 20px;">
+        <h2 class="text-center" style="background-color: black; color: white;"> TIME 04 PRÓXIMO </h2>
+        <table class="table" >
+          <thead>
+            <tr>
+              <th scope="col">POSIÇAO</th>
+              <th scope="col">NOME</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {% for jogador in proximos04 %}
+            <tr style="font-size: 30px;">
+              <th scope="row" >{{ jogador.posicao }}</th>
+              <td >{{ jogador.nome }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
     </div>
+
+
   </div> <!-- ROW-->
   </br>
 </div> <!-- sombra div-->

@@ -242,9 +242,41 @@ def cadastrar_time(request): #cadastro do time
                     aux = aux+1
                 #Redireciona de volta pra mostrar o novo time
                 return redirect('cadastrar_time')
+        
+        
+        proximos01 = []
+        proximos02 = []
+        proximos03 = []
+        proximos04 = []
+        n = pelada.quantidade_jogadores
+
+        # seleciona os jogadores para o time 1
+        time01_ids = [jogador.id for jogador in proximos[:n]]
+        proximos01 = list(Jogador.objects.filter(id__in=time01_ids))
+        proximos01 = sorted(proximos01, key=lambda jogador: jogador.posicao)
+
+        # seleciona os jogadores para o time 2
+        time02_ids = [jogador.id for jogador in proximos if jogador.id not in time01_ids][:n]
+        proximos02 = list(Jogador.objects.filter(id__in=time02_ids))
+        proximos02 = sorted(proximos02, key=lambda jogador: jogador.posicao)
+
+        # seleciona os jogadores para o time 3
+        time03_ids = [jogador.id for jogador in proximos if jogador.id not in time01_ids and jogador.id not in time02_ids][:n]
+        proximos03 = list(Jogador.objects.filter(id__in=time03_ids))
+        proximos03 = sorted(proximos03, key=lambda jogador: jogador.posicao)
+
+        # seleciona os jogadores para o time 4
+        time04_ids = [jogador.id for jogador in proximos if jogador.id not in time01_ids and jogador.id not in time02_ids and jogador.id not in time03_ids]
+        proximos04 = list(Jogador.objects.filter(id__in=time04_ids))
+        proximos04 = sorted(proximos04, key=lambda jogador: jogador.posicao)
+
+
 
         context = {     
             'proximos' : proximos,
+            'proximos01' : proximos01,
+            'proximos02' : proximos02,
+            'proximos03' : proximos03,
             'titulo' : "Time",
             'time_vermelho' : vermelho,
             'time_azul' : azul,
