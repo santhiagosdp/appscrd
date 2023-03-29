@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <style>
@@ -78,8 +79,6 @@
 <!--  FINAL DA MODAL DA PRIORIDADE MODAL-->
 
 
-
-
 <div class="row" style="box-shadow:0 0 5px 0px grey; padding-bottom: 20px; padding: 20px; display: flex; justify-content: center; align-items: center;" >
   <div class="col-sm-12 col-md-12 col-lg-12 text-center" style="box-shadow:0 0 5px 0px grey;">
 
@@ -127,6 +126,7 @@
   
   </br>
   <div class="row" id="divSuspenso" style="background-color: black; display:none; justify-content: center; align-items: center;" >
+    <h2 style="font-weight: bold; color: black; background-color: white;" class="text-center" >JOGO FINALIZADO</h2>
     <h2 style="font-weight: bold; color: black; background-color: white;" class="text-center" >QUEM SAI?</h2>
       <div class="row col-sm-4 col-md-4 col-lg-4">
         <a type="button"  href="?perdedor=azul"  class="btnempate"style="width:90%; height: 100px;background-color: blue"></a>
@@ -140,6 +140,11 @@
       <p></p>
   </div>
 
+  <audio id="finaljogo">
+    <source src="{% static 'acaboutempo.mp3' %}" type="audio/mpeg" playsinline>
+    <source src="{% static 'acaboutempo.ogg' %}" type="audio/ogg" playsinline>
+		Seu navegador não suporta o elemento audio.
+	</audio>
 
 <div class="row" style="box-shadow:0 0 5px 0px grey; padding-bottom: 20px; padding: 20px; display: flex; justify-content: center; align-items: center;" >
   <h2 style="font-weight: bold; color: white; background-color: black;" class="text-center" >PRÓXIMOS</h2>
@@ -259,10 +264,13 @@
         seconds = 59;
         if (--minutes < 0) {
           clearInterval(timer);
-          enableLink();            
+          enableLink();     
+          playFinalJogo()       
           div.style.display = "flex";
           divtemp.style.display = "none";
+          
           alert("JOGO FINALIZADO!");
+          
         }
       }
     };
@@ -295,6 +303,11 @@
       event.preventDefault();
     }
   });
+
+  function playFinalJogo() {
+    var audio = document.getElementById("finaljogo");
+    audio.play();
+  }
 
 </script>
 

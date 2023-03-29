@@ -7,6 +7,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+import os
+from pathlib import Path
 
 
 @login_required
@@ -274,8 +276,6 @@ def cadastrar_time(request): #cadastro do time
         time04_ids = [jogador.id for jogador in proximos if jogador.id not in time01_ids and jogador.id not in time02_ids and jogador.id not in time03_ids]
         proximos04 = list(Jogador.objects.filter(id__in=time04_ids))
         proximos04 = sorted(proximos04, key=lambda jogador: jogador.posicao)
-
-
 
         context = {     
             'proximos' : proximos,
