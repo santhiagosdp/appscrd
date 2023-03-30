@@ -9,7 +9,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import os
 from pathlib import Path
-import requests
+#import requests
+import urllib.parse
+import urllib.request
 from django.http import JsonResponse
 from django.conf import settings
 
@@ -344,13 +346,16 @@ def feedback(request):
         telefone = str(request.POST.get('telefone'))
         mensagem = request.POST.get('mensagem')
         mensagem = mensagem.replace(' ', '+')
-        texto = "Usuário: " + str(request.user) + "\n" + "Nome: " + nome + "\n" + "Telefone: " + telefone + "\n" + "Mensagem: " + mensagem
+        texto = "Usuário:_" + str(request.user) + "" + "Nome:_" + nome + "" + "Telefone:_" + telefone + "" + "Mensagem:_" + mensagem
 
         
-        response = requests.get(settings.LINKWPP+texto+settings.APIKEYLINKWPP)
+        # response = requests.get(settings.LINKWPP+texto+settings.APIKEYLINKWPP)
+        url = settings.LINKWPP+texto+settings.APIKEYLINKWPP
+        encoded_url = urllib.parse.quote(url, safe=':/?=&\n')
+        response = urllib.request.urlopen(encoded_url)
 
         # Verifica se a solicitação foi bem-sucedida
-        if response.status_code == 200:
+        if response:
             return redirect('cadastrar_time')
 
         # Caso contrário, retorna uma mensagem de erro
