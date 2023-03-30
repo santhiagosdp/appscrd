@@ -48,30 +48,29 @@
 <div class="modal fade" id="modalprioridade" tabindex="-1" aria-labelledby="modalprioridadelabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
+
       <div class="modal-header">
-        <h5 class="modal-title" id="modalprioridadeLabel">Qual a prioridade para próximos? </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="modalprioridadeLabel">Qual a prioridade para próximos?</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="get" class="form-inline">
-        {% csrf_token %}
-        <div class="modal-body"> <!-- INICIO modal-body-->
+    
+      <div class="modal-body"> <!-- INICIO modal-body-->
+        <form method="get" class="form-inline">
+          {% csrf_token %}
+            <div class="row col-sm-6 col-md-6 col-lg-6">
+              <a type="button"  href="?perdedor=prioridadeazul"  class="btnempate"style=" height: 100px;background-color: {{pelada.corTime01}}"></a>
+            </div>
+            
+            <div class="row col-sm-6 col-md-6 col-lg-6">
+              <a type="button" href="?perdedor=prioridadevermelho" class="btnempate" style="height: 100px; background-color: {{pelada.corTime02}} "></a>
+            </div>
+        </form>
+      </div> <!-- FIM modal-body-->
 
-          <!-- <a type="button"  class="btn btn-secondary" href="?perdedor=prioridadeazul" style=" width: 50px; height: 100px;background-color: blue"></a>
-          <a type="button"  class="btn btn-secondary" href="?perdedor=prioridadevermelho" style=" width: 50%; height: 100px;background-color: red"></a>
-          -->
-          <div class="row col-sm-6 col-md-6 col-lg-6">
-            <a type="button"  href="?perdedor=prioridadeazul"  class="btnempate"style=" height: 100px;background-color: blue"></a>
-          </div>
-          
-          <div class="row col-sm-6 col-md-6 col-lg-6">
-            <a type="button" href="?perdedor=prioridadevermelho" class="btnempate" style=" height: 100px; background-color: red "></a>
-          </div>
+      <div class="modal-footer">
+        Escolher qual o Time com Prioridade para jogar primeiro.
+      </div>
 
-        </div> <!-- FIM modal-body-->
-        <div class="modal-footer">
-          <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</a>
-        </div>
-      </form>
     </div>
   </div>
 </div>
@@ -115,12 +114,12 @@
             <span id="timer" style="color: red;" >
               <strong>{{pelada.tempo_pelada}}</strong>
             </span> Minuto(s)
-          </p>           
+          </p>
       </h2>
       <a class="btn btn-success btstart" type="button" id="btnstartime" onclick="startTimer({{pelada.tempo_pelada}})" style="width: 70%; height: 100px;">INICIAR</a>
       </br>
-      <a class="btn btn-danger btstart" type="button" id="btnpausetime" onclick="pauseTimer()" style="width: 30%; height: 100px;">Pause</a>
-      <a class="btn btn-warning btstart" type="button" id="btnresumetime" onclick="resumeTimer()" style="width: 30%; height: 100px; color: white;">Play</a>
+      <a class="btn btn-danger btstart" type="button" id="btnpausetime" onclick="pauseTimer()" style="opacity: 0.7; pointer-events: none; width: 30%; height: 100px;">Pause</a>
+      <a class="btn btn-warning btstart" type="button" id="btnresumetime" onclick="resumeTimer()" style="opacity: 0.7; pointer-events: none ;width: 30%; height: 100px; color: white;">Play</a>
     </div>
   </div>
   
@@ -129,13 +128,13 @@
     <h2 style="font-weight: bold; color: black; background-color: white;" class="text-center" >JOGO FINALIZADO</h2>
     <h2 style="font-weight: bold; color: black; background-color: white;" class="text-center" >QUEM SAI?</h2>
       <div class="row col-sm-4 col-md-4 col-lg-4">
-        <a type="button"  href="?perdedor=azul"  class="btnempate"style="width:90%; height: 100px;background-color: blue"></a>
+        <a type="button"  href="?perdedor=azul"  class="btnempate"style="width:90%; height: 100px;background-color: {{pelada.corTime01}}"></a>
       </div>
       <div class="row col-sm-4 col-md-4 col-lg-4">
         <button type="button" data-toggle="modal" data-target="#modalprioridade" class="btnempate" style="width:90%; height: 100px;background-color: white ">EMPATE</button>
       </div>
       <div class="row col-sm-4 col-md-4 col-lg-4">
-        <a type="button" href="?perdedor=vermelho" class="btnempate" style="width:90%; height: 100px; background-color: red "></a>
+        <a type="button" href="?perdedor=vermelho" class="btnempate" style="width:90%; height: 100px; background-color: {{pelada.corTime02}} "></a>
       </div>
       <p></p>
   </div>
@@ -249,10 +248,14 @@
   let updateTimer = null; // definir como variável global
 
   const link3 = document.getElementById('btnstartime');
+  const linkpause = document.getElementById('btnpausetime');
+  const linkresume = document.getElementById('btnresumetime');
+
+  
 
   function startTimer(tempo) {     
     div.style.display = "none";
-    disableLink();
+    disableLinkIniciar();    
     const time = tempo*60;
     let minutes = parseInt(time / 60, 10);
     let seconds = parseInt(time % 60, 10);  
@@ -263,8 +266,7 @@
       if (--seconds < 0) {
         seconds = 59;
         if (--minutes < 0) {
-          clearInterval(timer);
-          enableLink();     
+          clearInterval(timer);               
           playFinalJogo()       
           div.style.display = "flex";
           divtemp.style.display = "none";
@@ -280,31 +282,78 @@
 
   function pauseTimer() {
     paused = true;
+    linkpause.style.pointerEvents = 'none';
+    linkpause.style.opacity = "0.7";
+    linkresume.style.pointerEvents = 'auto';
+    linkresume.style.opacity = "1";
     div.style.display = "flex";
     clearInterval(timer);
   }
 
   function resumeTimer() {
     paused = false;
+    linkresume.style.pointerEvents = 'none';
+    linkresume.style.opacity = "0.7";
+    linkpause.style.pointerEvents = 'auto';
+    linkpause.style.opacity = "1";
     div.style.display = "none";
     timer = setInterval(updateTimer, 1000);
   }
 
-  function disableLink() {
+  // BOTAO INICIAR TEMPO
+  function disableLinkIniciar() {
+    linkpause.style.opacity = "1";
+    linkpause.style.pointerEvents = 'auto';
+    link3.style.opacity = "0.7";
     link3.style.pointerEvents = 'none';
   }
-
   function enableLink() {
     link3.style.pointerEvents = 'auto';
+    link3.style.opacity = "1";
+    linkresume.style.opacity = "0.7";
+    linkpause.style.opacity = "0.7";
+    
+
   }
+
+  // BOTAO DE Pause
+  function enableLinkpause() {
+    linkpause.style.pointerEvents = 'auto';
+    linkpause.style.opacity = "1";
+    linkresume.style.pointerEvents = 'none';
+    linkresume.style.opacity = "0.7";
+  }
+  
+  // BOTAO PLAY
+  function enableLinkresume() {
+    linkresume.style.pointerEvents = 'auto';
+    linkpause.style.opacity = "1";
+    linkpause.style.pointerEvents = 'none';
+    linkpause.style.opacity = "0.7";
+  }
+
+
+  
 
   link3.addEventListener('click', function(event) {
     if (link3.style.pointerEvents === 'none') {
       event.preventDefault();
     }
   });
+  linkpause.addEventListener('click', function(event) {
+    if (linkpause.style.pointerEvents === 'none') {
+      event.preventDefault();
+    }
+  });
+
+  linkresume.addEventListener('click', function(event) {
+    if (linkresume.style.pointerEvents === 'none') {
+      event.preventDefault();
+    }
+  });
 
   function playFinalJogo() {
+    enableLink();
     var audio = document.getElementById("finaljogo");
     audio.play();
   }
