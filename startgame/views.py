@@ -9,6 +9,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import os
 from pathlib import Path
+import requests
+from django.http import JsonResponse
+from django.conf import settings
+
 
 
 @login_required
@@ -332,6 +336,37 @@ def new_user(request):
     return render(request, 'new_user.html', context)
 
 
+@login_required
+def feedback(request):
+    
+    if request.method == "POST":
+        nome = request.POST.get('nome')
+        telefone = str(request.POST.get('telefone'))
+        mensagem = request.POST.get('mensagem')
+        mensagem = mensagem.replace(' ', '+')
+        texto = "Usuário: " + str(request.user) + "\n" + "Nome: " + nome + "\n" + "Telefone: " + telefone + "\n" + "Mensagem: " + mensagem
+
+        
+        response = requests.get(settings.LINKWPP+texto+settings.APIKEYLINKWPP)
+
+        # Verifica se a solicitação foi bem-sucedida
+        if response.status_code == 200:
+            return redirect('cadastrar_time')
+
+        # Caso contrário, retorna uma mensagem de erro
+        context = {
+            'titulo' : "FeedBack",
+            'usuario' : request.user,
+            'erro' : "Erro ao Enviar FeedBack. Se erro persistir, entre em contato com Administrador!",
+        }
+        return render(request, 'feedback.html', context)
+
+
+    context = {
+        'titulo' : "FeedBack",
+        'usuario' : request.user,
+    }
+    return render(request, 'feedback.html', context)
 
 
 

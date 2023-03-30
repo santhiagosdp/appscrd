@@ -13,6 +13,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-v+ldjd85=d+89p^0cxn2a1igusvxd*d1o#-v@-fufecq_qw^&j'
 
+LINKWPP = 'https://api.callmebot.com/whatsapp.php?phone=556381269417&text='
+APIKEYLINKWPP = '&apikey=6316727'
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 #DEBUG = True

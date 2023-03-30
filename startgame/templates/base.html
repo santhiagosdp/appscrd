@@ -46,7 +46,10 @@
         <div class="row minha-div">
 
             <div class="row ">
-                <div class="col-md-12 btn text-end">
+                <div class="col-md-6 btn text-left">
+                    <a type="button" class="btn btn-outline-success" style="text-decoration: none; color: white" href="{% url 'feedback' %}">FeedBack</a>
+                </div>
+                <div class="col-md-6 btn text-end">
                     <a type="button" class="btn btn-outline-danger" style="text-decoration: none; color: white" href="{% url 'logout' %}">{{usuario}}, sair</a>
                 </div>
             </div>

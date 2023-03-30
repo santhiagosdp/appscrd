@@ -18,6 +18,8 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('new_user', views.new_user, name='new_user'),
 
+    path('feedback', views.feedback, name='feedback'),
+
 
     path('listar_jogadores/', views.listar_jogadores, name='listar_jogadores'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
