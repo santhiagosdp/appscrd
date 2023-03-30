@@ -348,7 +348,7 @@ def feedback(request):
         mensagem = mensagem.replace(' ', '+')
         print (mensagem)
         texto = "Usuário:_" + str(request.user) + "\n" + "Nome:_" + nome + "\n" + "Telefone:_" + telefone + "\n" + "Mensagem:_" + mensagem
-        texto = texto.replace('\n', '__-+')
+        texto = texto.replace('\n', '_')
         
         # response = requests.get(settings.LINKWPP+texto+settings.APIKEYLINKWPP)
         url = settings.LINKWPP+texto+settings.APIKEYLINKWPP
