@@ -110,10 +110,10 @@
     <h2 style="font-weight: bold; color: black; background-color: white;" class="text-center" >TEMPORIZADOR</h2>
     <div class="col-sm-12 col-md-12 col-lg-12">
       <h2>
-          <p style="font-size: 100%; color: white;">TEMPO RESTANTE<br>
+          <p style="font-size: 100%; color: white;">TEMPO DO JOGO: {{pelada.tempo_pelada}} Minutos<br>
             <span id="timer" style="color: red;" >
-              <strong>{{pelada.tempo_pelada}}</strong>
-            </span> Minuto(s)
+              <strong></strong>
+            </span>
           </p>
       </h2>
       <a class="btn btn-success btstart" type="button" id="btnstartime" onclick="startTimer({{pelada.tempo_pelada}})" style="width: 70%; height: 100px;">INICIAR</a>
@@ -241,6 +241,8 @@
   </br>
 </div> <!-- sombra div-->
 
+
+
 <script>
   let timer = null;
   let paused = false;
@@ -354,6 +356,8 @@
     var audio = document.getElementById("finaljogo");
     audio.play();
   }
+    
+</script>
     
 </script>
 
