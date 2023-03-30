@@ -138,12 +138,13 @@
       </div>
       <p></p>
   </div>
-
+<!-- toca audio quando acaba o tempo-->
   <audio id="finaljogo">
-    <source src="{% static 'acaboutempo.mp3' %}" type="audio/mpeg" playsinline>
-    <source src="{% static 'acaboutempo.ogg' %}" type="audio/ogg" playsinline>
+    <source src="{% static 'finaljogo.mp3' %}" type="audio/mpeg" playsinline>
+    <source src="{% static 'finaljogo.ogg' %}" type="audio/ogg" playsinline>
 		Seu navegador não suporta o elemento audio.
 	</audio>
+
 
 <div class="row" style="box-shadow:0 0 5px 0px grey; padding-bottom: 20px; padding: 20px; display: flex; justify-content: center; align-items: center;" >
   <h2 style="font-weight: bold; color: white; background-color: black;" class="text-center" >PRÓXIMOS</h2>
@@ -267,12 +268,10 @@
         seconds = 59;
         if (--minutes < 0) {
           clearInterval(timer);               
-          playFinalJogo()       
+          playFinalJogo();
+          alert("JOGO FINALIZADO!");
           div.style.display = "flex";
           divtemp.style.display = "none";
-          
-          alert("JOGO FINALIZADO!");
-          
         }
       }
     };
@@ -282,6 +281,8 @@
 
   function pauseTimer() {
     paused = true;
+    playFinalJogo();
+    disableLinkIniciar();    
     linkpause.style.pointerEvents = 'none';
     linkpause.style.opacity = "0.7";
     linkresume.style.pointerEvents = 'auto';
@@ -292,6 +293,7 @@
 
   function resumeTimer() {
     paused = false;
+    disableLinkIniciar();    
     linkresume.style.pointerEvents = 'none';
     linkresume.style.opacity = "0.7";
     linkpause.style.pointerEvents = 'auto';
@@ -312,8 +314,6 @@
     link3.style.opacity = "1";
     linkresume.style.opacity = "0.7";
     linkpause.style.opacity = "0.7";
-    
-
   }
 
   // BOTAO DE Pause
@@ -331,9 +331,6 @@
     linkpause.style.pointerEvents = 'none';
     linkpause.style.opacity = "0.7";
   }
-
-
-  
 
   link3.addEventListener('click', function(event) {
     if (link3.style.pointerEvents === 'none') {
@@ -357,7 +354,7 @@
     var audio = document.getElementById("finaljogo");
     audio.play();
   }
-
+    
 </script>
 
 
