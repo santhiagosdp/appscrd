@@ -346,12 +346,14 @@ def feedback(request):
         telefone = str(request.POST.get('telefone'))
         mensagem = request.POST.get('mensagem')
         mensagem = mensagem.replace(' ', '+')
-        texto = "Usuário:_" + str(request.user) + "" + "Nome:_" + nome + "" + "Telefone:_" + telefone + "" + "Mensagem:_" + mensagem
-
+        print (mensagem)
+        texto = "Usuário:_" + str(request.user) + "\n" + "Nome:_" + nome + "\n" + "Telefone:_" + telefone + "\n" + "Mensagem:_" + mensagem
+        texto = texto.replace('\n', '__-+')
         
         # response = requests.get(settings.LINKWPP+texto+settings.APIKEYLINKWPP)
         url = settings.LINKWPP+texto+settings.APIKEYLINKWPP
         encoded_url = urllib.parse.quote(url, safe=':/?=&\n')
+        # Codificando a URL
         response = urllib.request.urlopen(encoded_url)
 
         # Verifica se a solicitação foi bem-sucedida
