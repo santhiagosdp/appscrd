@@ -10,6 +10,14 @@ class Jogador(models.Model):
     is_disponivel = models.BooleanField(default=True)
     is_selecionado = models.BooleanField(default=False)
 
+class AuxiliarDesfazer(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    habil = models.BooleanField(default=True)
+    nome = models.CharField(max_length=100)
+    posicao = models.IntegerField(default=0)
+    is_disponivel = models.BooleanField(default=True)
+    is_selecionado = models.BooleanField(default=False)
+
 class Pelada(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     habil = models.BooleanField(default=True)
@@ -50,4 +58,9 @@ class Time_pelada(models.Model):
 
 
 
-
+class Feedback(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    habil = models.BooleanField(default=True)
+    nome = models.CharField(max_length=100)
+    telefone = models.CharField(max_length=100)
+    mensagem = models.CharField(max_length=100)

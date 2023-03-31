@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.forms import formset_factory
-from .models import Jogador, Pelada, Time, Time_jogador
+from .models import Jogador, Pelada, Time, Time_jogador, Feedback, AuxiliarDesfazer
 from .forms import JogadorForm, TimeForm, PeladaForm, Time_peladaForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
@@ -141,18 +141,32 @@ def cadastrar_time(request): #cadastro do time
         pelada = p
 
     if pelada != 0:
+        desfazer = request.GET.get('desfazer')
+        if desfazer:
+            delete = Jogador.objects.filter(usuario=request.user, habil=True)
+            delete.delete()
+            atualizar = AuxiliarDesfazer.objects.filter(usuario=request.user, habil=True)
+            for jog in atualizar:
+                save = Jogador.objects.create(
+                    usuario = request.user,
+                    nome = jog.nome,
+                    posicao = jog.posicao,
+                )
+                save.save()
+            return redirect('cadastrar_time')
+        
         ##montar times do zero
         n = pelada.quantidade_jogadores
         players = Jogador.objects.filter(usuario=request.user, habil=True).order_by('posicao')
-
+        
         # seleciona os jogadores para o time azul
-        time_azul = players.values_list('id', flat=True)[:n]
-        azul = list(Jogador.objects.filter(id__in=time_azul))
+        time01 = players.values_list('id', flat=True)[:n]
+        azul = list(Jogador.objects.filter(id__in=time01))
         azul = sorted(azul, key=lambda jogador: jogador.posicao)
 
         # seleciona os jogadores para o time vermelho
-        time_vermelho = players.exclude(id__in=Jogador.objects.filter(id__in=time_azul)).values_list('id', flat=True)[:n]
-        vermelho = list(Jogador.objects.filter(id__in=time_vermelho))
+        time02 = players.exclude(id__in=Jogador.objects.filter(id__in=time01)).values_list('id', flat=True)[:n]
+        vermelho = list(Jogador.objects.filter(id__in=time02))
         vermelho = sorted(vermelho, key=lambda jogador: jogador.posicao)
 
         proximos = []
@@ -172,6 +186,16 @@ def cadastrar_time(request): #cadastro do time
         
         if get_perdedor:
 ##EMPATE AZUL PRIORIDADE
+            delete = AuxiliarDesfazer.objects.filter(usuario=request.user, habil=True)
+            delete.delete()
+            for jog in players:
+                save = AuxiliarDesfazer.objects.create(
+                    usuario = request.user,
+                    nome = jog.nome,
+                    posicao = jog.posicao,
+                )
+                save.save()
+
             if get_perdedor == "prioridadeazul": ## caso de empate com prioridade azul
                 aux = 1
                 for jogador in proximos:
@@ -338,6 +362,7 @@ def new_user(request):
     return render(request, 'new_user.html', context)
 
 
+
 @login_required
 def feedback(request):
     
@@ -345,20 +370,33 @@ def feedback(request):
         nome = request.POST.get('nome')
         telefone = str(request.POST.get('telefone'))
         mensagem = request.POST.get('mensagem')
+
+        salvar = Feedback.objects.create(
+            usuario = request.user,
+            nome=nome,
+            telefone=telefone,
+            mensagem=mensagem,
+        )
+        salvar.save()
+
+        mensagem = mensagem.replace('  ', '+')
         mensagem = mensagem.replace(' ', '+')
-        print (mensagem)
-        texto = "Usuário:_" + str(request.user) + "\n" + "Nome:_" + nome + "\n" + "Telefone:_" + telefone + "\n" + "Mensagem:_" + mensagem
-        texto = texto.replace('\n', '_')
-        
-        # response = requests.get(settings.LINKWPP+texto+settings.APIKEYLINKWPP)
-        url = settings.LINKWPP+texto+settings.APIKEYLINKWPP
+        mensagem = mensagem.replace('\n', '')
+        texto = f"Usuário: {request.user}\nNome: {nome}\nTelefone: {telefone}\nMensagem: {mensagem}"
+        texto = texto.replace("\n", "")
+        texto = texto.replace(' ', '+')
+        #print(texto)
+            
+        url = f"{settings.LINKWPP}{texto}{settings.APIKEYLINKWPP}"
+        print(url)
+        #response = urllib.request.urlopen(url)
         encoded_url = urllib.parse.quote(url, safe=':/?=&\n')
-        # Codificando a URL
+        print(encoded_url)
         response = urllib.request.urlopen(encoded_url)
 
-        # Verifica se a solicitação foi bem-sucedida
         if response:
             return redirect('cadastrar_time')
+
 
         # Caso contrário, retorna uma mensagem de erro
         context = {
@@ -374,6 +412,7 @@ def feedback(request):
         'usuario' : request.user,
     }
     return render(request, 'feedback.html', context)
+
 
 
 
