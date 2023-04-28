@@ -1,0 +1,62 @@
+{% extends 'basene.html' %}
+
+{% block content %}
+<style>
+ h6{
+    text-align: center;
+    color:brown;
+    text-decoration: solid;
+    font-size: 2em;
+ }
+ p{
+  font-size: 130%;
+  text-align: justify;
+ }
+</style>
+
+
+<div class="container">
+
+  <div class="row text-center">  <!-- titulo topo pagina-->
+
+
+  </div>
+
+  <div class="row" style="padding: 20px;">
+    <div class="col-md-6">
+      <h1>Carregar</h1>
+
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo"><br>
+
+        <label for="arquivo">Arquivo:</label>
+        <input type="file" id="arquivo" name="arquivo"><br>
+
+        <input type="submit" value="Salvar">
+      </form>
+    </div>
+
+    <div class="col-md-6">
+      <h1>Arquivos disponíveis:</h1>
+      <ul>
+      {% for nota in notas %}
+          <li>
+            <a style="text-decoration: none;" href="{% url 'abrir_nota_fiscal' nota.id %}" target="_blank">{{ nota.titulo }} </a>
+            ___
+            <a class="btn btn-outline-success btn-sm" href="{% url 'download_nota_fiscal' nota.id %}" target="_blank">Baixar </a>
+          </li>
+            <br>
+      {% empty %}
+          <li>Não há arquivos disponíveis.</li>
+      {% endfor %}
+      </ul>
+    </div>
+
+
+  </div>
+</div>
+
+  
+{% endblock %}
