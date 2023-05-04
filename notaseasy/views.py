@@ -16,6 +16,7 @@ from .models import NotaFiscal
 from django.http import FileResponse
 import mimetypes
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponseForbidden
 
 ######################################
 
@@ -46,6 +47,13 @@ def notaseasy(request):
 
 def abrir_nota_fiscal(request, nota_id):
     nota = get_object_or_404(NotaFiscal, id=nota_id)
+
+    # Verificar se o usuário que está acessando a página é o mesmo que está associado à nota fiscal
+    if request.user != nota.usuario:
+        return HttpResponseRedirect('/notaseasy')
+        #return HttpResponseForbidden("Acesso negado.")
+    
+    # Resto do código para retornar o arquivo    
     file_path = os.path.join(settings.MEDIA_ROOT, str(nota.arquivo))
     with open(file_path, 'rb') as file:
         response = HttpResponse(file.read(), content_type=mimetypes.guess_type(file_path)[0])
@@ -55,6 +63,13 @@ def abrir_nota_fiscal(request, nota_id):
 
 def download_nota_fiscal(request, nota_id):
     nota = get_object_or_404(NotaFiscal, id=nota_id)
+
+    # Verificar se o usuário que está acessando a página é o mesmo que está associado à nota fiscal
+    if request.user != nota.usuario:
+        return HttpResponseRedirect('/notaseasy')
+        #return HttpResponseForbidden("Acesso negado.")
+    
+    # Resto do código para retornar o arquivo
     file_path = os.path.join(settings.MEDIA_ROOT, str(nota.arquivo))
     with open(file_path, 'rb') as file:
         response = HttpResponse(file.read(), content_type=mimetypes.guess_type(file_path)[0])

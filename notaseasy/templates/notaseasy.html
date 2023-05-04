@@ -42,8 +42,7 @@
       <h1>Arquivos disponíveis:</h1>
       <ul>
       {% for nota in notas %}
-          <li>
-            <a style="text-decoration: none;" href="{% url 'abrir_nota_fiscal' nota.id %}" target="_blank">{{ nota.titulo }} </a>
+          <li><a style="text-decoration: none;" href="{% url 'abrir_nota_fiscal' nota.id %}" target="_blank">{{ nota.titulo }} </a>
             ___
             <a class="btn btn-outline-success btn-sm" href="{% url 'download_nota_fiscal' nota.id %}" target="_blank">Baixar </a>
           </li>
